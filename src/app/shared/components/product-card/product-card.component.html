@@ -1,17 +1,5 @@
-<mat-card class="product-card" appearance="outlined" [routerLink]="['/products', product.sId]">
+<mat-card class="product-card" appearance="outlined">
 	<div class="product-image-container">
-		<!-- Mockup tags para Huggies -->
-		@if (product.sBrand === 'Huggies') {
-		<div class="tag-left">
-			<span class="tag-left-number">80</span>
-			<span class="tag-left-text">unidades</span>
-		</div>
-		<div class="tag-right">
-			<span class="tag-right-top">Toallitas húmedas</span>
-			<span class="tag-right-bottom">Cuidado 4 en 1</span>
-		</div>
-		}
-
 		<img mat-card-image [src]="product.aImages[0]" [alt]="product.sNameProduct" loading="lazy"
 			class="product-image" />
 
@@ -22,23 +10,39 @@
 	</div>
 
 	<mat-card-content class="product-info">
-		@if (defaultVariant) {
-		<span class="product-brand">{{ defaultVariant.sName | uppercase }}</span>
+		@if (selectedVariant()) {
+		<span class="product-variant-label">{{ selectedVariant()!.sName | uppercase }}</span>
 		}
-		<h3 class="product-name">{{ product.sNameProduct }}</h3>
+		<h3 class="product-name">
+			<a [routerLink]="['/products', product.sId]" class="stretched-link">
+				{{ product.sNameProduct }}
+			</a>
+		</h3>
+
+		<!-- Selector de variantes -->
+		@if (product.aVariants && product.aVariants.length > 1) {
+		<div class="variant-selector">
+			@for (variant of product.aVariants; track variant.sId) {
+			<button class="variant-chip" [class.variant-chip--active]="selectedVariant()?.sId === variant.sId"
+				(click)="selectVariant(variant, $event)">
+				{{ variant.sName }}
+			</button>
+			}
+		</div>
+		}
 
 		<div class="product-tags">
 			<div class="tag tag-interest">
-				<mat-icon>local_offer</mat-icon> Te puede interesar
+				<img src="assets/icon-tag-2.svg" alt="" class="tag-icon" /> Te puede interesar
 			</div>
 			<div class="tag tag-brand">
-				<mat-icon>storefront</mat-icon> Inkafarma
+				<img src="assets/Icon-brand.svg" alt="" class="tag-icon" /> Inkafarma
 			</div>
 		</div>
 
 		<div class="product-prices">
 			@if (product.nRegularPrice) {
-			<div class="price-row regular">
+			<div class="price-row" [class.regular]="product.nPromotionalPrice || product.nCardPrice">
 				<span class="price-value">S/ {{ product.nRegularPrice | number:'1.2-2' }}</span>
 				<div class="sip-icons invisible">
 					<img src="assets/sip-black.svg" alt="Sip" class="sip-icon" />
@@ -71,11 +75,8 @@
 
 	<mat-card-actions class="product-actions">
 		<button mat-flat-button class="btn-primary" (click)="onAddToCart($event)">Agregar al carrito</button>
-		<button mat-icon-button
-			class="btn-wishlist"
-			[class.is-favorite]="isFavorite()"
-			[class.is-animating]="isAnimating()"
-			(click)="toggleFavorite($event)">
+		<button mat-icon-button class="btn-wishlist" [class.is-favorite]="isFavorite()"
+			[class.is-animating]="isAnimating()" (click)="toggleFavorite($event)">
 			<mat-icon>{{ isFavorite() ? 'favorite' : 'favorite_border' }}</mat-icon>
 			@if (isAnimating() && isFavorite()) {
 			<span class="heart-burst"></span>

@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Snackbar success styles */
+.snackbar-success {
+	--mdc-snackbar-container-color: #109c5b;
+	--mdc-snackbar-supporting-text-color: #ffffff;
+	--mat-snack-bar-button-color: #ffffff;
+}
+
+/* Custom Snackbar Panel */
+.favorite-snackbar-panel {
+	.mdc-snackbar__surface {
+		background: transparent !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+	}
+}
+
+.row>* {
+	padding-right: calc(var(--bs-gutter-x) * 1) !important;
+	padding-left: calc(var(--bs-gutter-x) * 1) !important;
+}

@@ -1,0 +1,28 @@
+<main class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box_productos">
+                <h1>Nuestros Productos</h1>
+
+                @if (isLoading()) {
+                <div class="product-grid">
+                    <app-product-card-skeleton [count]="8" />
+                </div>
+                } @else if (hasError()) {
+                <div class="error-state">
+                    <span class="material-icons">error_outline</span>
+                    <p>Ocurrió un error al cargar los productos.</p>
+                    <button mat-flat-button class="btn-retry" (click)="loadProducts()">Reintentar</button>
+                </div>
+                } @else {
+                <div class="product-grid">
+                    @for (product of products(); track product.sId) {
+                    <app-product-card [product]="product" (addToCart)="onAddToCart($event)">
+                    </app-product-card>
+                    }
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>

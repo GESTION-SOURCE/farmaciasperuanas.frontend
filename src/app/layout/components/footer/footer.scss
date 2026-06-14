@@ -1,0 +1,146 @@
+.footer {
+	background-color: #ffffff;
+	font-family: inherit;
+	color: #354159;
+	margin-top: 24px;
+
+	.footer-title {
+		font-size: 16px;
+		color: #354159;
+		margin: 0 0 20px 0;
+		font-weight: 600;
+		line-height: 24px;
+		letter-spacing: 0.1px;
+		vertical-align: middle;
+	}
+
+	.footer-links {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+
+		li {
+			margin-bottom: 16px;
+
+			a {
+				text-decoration: none;
+				color: #6a747e;
+				font-size: 14px;
+				transition: color 0.2s;
+			}
+		}
+	}
+
+	.footer-col-extra {
+		display: flex;
+		flex-direction: column;
+		gap: 30px;
+	}
+
+	.footer-section {
+		.footer-title {
+			margin-bottom: 12px;
+		}
+	}
+
+	.social-icons {
+		display: flex;
+		gap: 8px;
+
+		.social-icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 32px;
+			height: 32px;
+			background-color: #17A15B;
+			color: #ffffff;
+			border-radius: 8px;
+			transition: background-color 0.2s;
+
+			&:hover {
+				background-color: #109c5b;
+			}
+
+			svg {
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+
+	.libro-reclamaciones {
+		img {
+			height: 48px;
+			object-fit: contain;
+			border: 1px solid #e2e8f0;
+			border-radius: 8px;
+			padding: 4px 12px;
+		}
+	}
+
+	.app-buttons {
+		display: flex;
+		gap: 12px;
+
+		.btn-app {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 8px 16px;
+			border: 1px solid #354159;
+			border-radius: 24px;
+			text-decoration: none;
+			color: #354159;
+			font-size: 13px;
+			font-weight: 600;
+			transition: all 0.2s;
+
+			img {
+				width: 18px;
+				height: 18px;
+			}
+
+			&:hover {
+				background-color: #f8fafc;
+				border-color: #1A8FF1;
+				color: #1A8FF1;
+			}
+		}
+	}
+
+	.footer-bottom {
+		background-color: #F8F8F8;
+		padding: 12px 0;
+		text-align: center;
+
+		p {
+			margin: 0;
+			font-size: 14px;
+			color: #354159;
+			font-weight: 400;
+			line-height: 21px;
+			letter-spacing: 0.1px;
+			text-align: center;
+			vertical-align: middle;
+		}
+	}
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+	.footer .footer-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 576px) {
+	.footer .footer-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.footer .app-buttons {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}

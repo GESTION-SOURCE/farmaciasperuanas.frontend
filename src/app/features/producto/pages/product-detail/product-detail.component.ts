@@ -1,15 +1,15 @@
 import { Component, inject, OnInit, signal, ElementRef, ViewChild } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { MockDataService } from '../../../../../core/services/mock-data.service';
-import { CartService } from '../../../../../core/services/cart.service';
-import { SeoService } from '../../../../../core/services/seo.service';
-import { AnalyticsService } from '../../../../../core/services/analytics.service';
-import { IProduct, IVariant } from '../../../../../core/interfaces/IProduct.interface';
-import { ProductCardComponent } from '../../../../../shared/components/product-card/product-card.component';
-import { AccordionComponent } from '../../../../../shared/components/accordion/accordion.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { IProduct, IVariant } from '../../../../core/interfaces/IProduct.interface';
+import { AnalyticsService } from '../../../../core/services/analytics.service';
+import { CartService } from '../../../../core/services/cart.service';
+import { MockDataService } from '../../../../core/services/mock-data.service';
+import { SeoService } from '../../../../core/services/seo.service';
+import { AccordionComponent } from '../../../../shared/components/accordion/accordion.component';
+import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
 
 @Component({
 	selector: 'app-product-detail',

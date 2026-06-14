@@ -1,4 +1,5 @@
 .product-card {
+	position: relative;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -18,72 +19,17 @@
 	.product-image-container {
 		position: relative;
 		background-color: #f7f7f7;
-		padding: 30px 24px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		border-radius: 12px 12px 0 0;
-		min-height: 220px;
-
-		.tag-left {
-			position: absolute;
-			top: 16px;
-			left: 16px;
-			background-color: #00b4b8;
-			color: white;
-			border-radius: 8px;
-			padding: 4px 10px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			line-height: 1;
-
-			.tag-left-number {
-				font-size: 28px;
-				font-weight: 800;
-			}
-
-			.tag-left-text {
-				font-size: 10px;
-				font-weight: 500;
-			}
-		}
-
-		.tag-right {
-			position: absolute;
-			top: 16px;
-			right: 16px;
-			background-color: #e8ecef;
-			border-radius: 8px;
-			padding: 6px 12px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			line-height: 1.3;
-
-			.tag-right-top {
-				font-size: 12px;
-				font-weight: 700;
-				color: #007a5e;
-				border-bottom: 1px dashed #007a5e;
-				padding-bottom: 2px;
-				margin-bottom: 2px;
-			}
-
-			.tag-right-bottom {
-				font-size: 11px;
-				font-weight: 700;
-				color: #00b4b8;
-			}
-		}
+		padding: 16px;
+		min-height: 248px;
 
 		.product-image {
-			width: 100%;
-			height: auto;
+			width: 248px;
+			height: 248px;
 			object-fit: contain;
-			max-height: 160px;
 			z-index: 1;
 		}
 
@@ -106,22 +52,73 @@
 		padding: 20px;
 		padding-bottom: 16px;
 
-		.product-brand {
-			font-size: 11px;
+		.product-variant-label {
+			font-size: 10px;
 			color: #8c9094;
 			text-transform: uppercase;
-			margin-bottom: 8px;
+			margin-bottom: 4px;
 			font-weight: 600;
 			letter-spacing: 0.5px;
+			line-height: 15px;
 		}
 
 		.product-name {
-			font-size: 15px;
-			color: #2b3641;
-			margin: 0 0 16px 0;
-			line-height: 1.4;
+			font-size: 14px;
+			margin: 0 0 8px 0;
+			line-height: 21px;
 			font-weight: 400;
 			min-height: 42px;
+			letter-spacing: 0.1px;
+
+			.stretched-link {
+				color: #2b3641;
+				text-decoration: none;
+
+				&::after {
+					position: absolute;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					left: 0;
+					z-index: 1;
+					content: "";
+				}
+			}
+		}
+
+		.variant-selector {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+			margin-bottom: 16px;
+
+			.variant-chip {
+				position: relative;
+				z-index: 2;
+				padding: 5px 12px;
+				border-radius: 20px;
+				font-size: 11px;
+				font-weight: 600;
+				letter-spacing: 0.3px;
+				cursor: pointer;
+				border: 1.5px solid #e0e3e7;
+				background-color: #ffffff;
+				color: #6a747e;
+				transition: all 0.2s ease;
+				white-space: nowrap;
+
+				&:hover {
+					border-color: #17A15B;
+					color: #17A15B;
+					background-color: #f0fdf4;
+				}
+
+				&--active {
+					border-color: #17A15B;
+					background-color: #f0fdf4;
+					color: #17A15B;
+				}
+			}
 		}
 
 		.product-tags {
@@ -133,27 +130,32 @@
 			.tag {
 				display: inline-flex;
 				align-items: center;
-				padding: 4px 12px;
-				border-radius: 16px;
-				font-size: 12px;
-				font-weight: 600;
-				width: fit-content;
+				padding: 4px 12px 4px 4px;
+				border-radius: 20px;
+				font-size: 11px;
+				font-weight: 500;
+				height: 24px;
+				gap: 4px;
+				line-height: 17px;
+				letter-spacing: 0.1px;
+				vertical-align: middle;
+				color: #ffffff;
 
-				mat-icon {
-					font-size: 14px;
-					width: 14px;
-					height: 14px;
-					margin-right: 6px;
+				.tag-icon {
+					width: 16px;
+					height: 16px;
+					flex-shrink: 0;
+					object-fit: contain;
 				}
 
 				&.tag-interest {
-					background-color: #e6f3ff;
-					color: #0084ff;
+					width: 136px;
+					background-color: #1A8FF1;
 				}
 
 				&.tag-brand {
-					background-color: #f0f2f5;
-					color: #6a747e;
+					width: 86px;
+					background-color: #7E8BA7;
 				}
 			}
 		}
@@ -276,8 +278,10 @@
 		align-items: center;
 
 		.btn-primary {
+			position: relative;
+			z-index: 2;
 			flex-grow: 1;
-			background-color: #109c5b;
+			background-color: #17A15B;
 			color: white;
 			border-radius: 24px;
 			font-weight: 500;
@@ -290,11 +294,13 @@
 		}
 
 		.btn-wishlist {
+			position: relative;
+			z-index: 2;
 			width: 48px;
 			height: 48px;
 			border-radius: 50%;
 			background-color: #f0fdf4;
-			color: #109c5b;
+			color: #17A15B;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -324,7 +330,7 @@
 
 			// ── Favorite active state ──
 			&.is-favorite {
-				background-color: #109c5b;
+				background-color: #17A15B;
 				color: #ffffff;
 
 				&:hover {
@@ -375,7 +381,7 @@
 				&::after {
 					width: 6px;
 					height: 6px;
-					background: #109c5b;
+					background: #17A15B;
 					box-shadow:
 						14px -14px 0 -1px #10b981,
 						-14px -14px 0 -1px #34d399,

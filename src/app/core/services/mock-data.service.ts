@@ -22,7 +22,7 @@ const generateProducts = (): IProduct[] => {
 			nPromotionalPrice: i % 3 === 0 ? 15.00 + i : undefined,
 			nCardPrice: i % 4 === 0 ? 12.00 + i : undefined,
 			aVariants: [
-				{ sId: `v1-${i}`, sName: i % 2 === 0 ? 'Bolsa 80 UN' : 'Sobre', nPrice: 20.00 + i },
+				{ sId: `v1-${i}`, sName: i % 2 === 0 ? 'Bolsa 80 UN' : 'SOBRE X2 TABS 1 UN', nPrice: 20.00 + i },
 				{ sId: `v2-${i}`, sName: i % 2 === 0 ? 'Caja 3 UN' : 'Caja 100 UN', nPrice: 50.00 + i }
 			]
 		});
