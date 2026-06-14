@@ -1,0 +1,85 @@
+<mat-card class="product-card" appearance="outlined" [routerLink]="['/products', product.sId]">
+	<div class="product-image-container">
+		<!-- Mockup tags para Huggies -->
+		@if (product.sBrand === 'Huggies') {
+		<div class="tag-left">
+			<span class="tag-left-number">80</span>
+			<span class="tag-left-text">unidades</span>
+		</div>
+		<div class="tag-right">
+			<span class="tag-right-top">Toallitas húmedas</span>
+			<span class="tag-right-bottom">Cuidado 4 en 1</span>
+		</div>
+		}
+
+		<img mat-card-image [src]="product.aImages[0]" [alt]="product.sNameProduct" loading="lazy"
+			class="product-image" />
+
+		<!-- Badge de oferta -->
+		@if (product.nPromotionalPrice) {
+		<img src="assets/oferta.png" alt="Oferta" class="oferta-badge" />
+		}
+	</div>
+
+	<mat-card-content class="product-info">
+		@if (defaultVariant) {
+		<span class="product-brand">{{ defaultVariant.sName | uppercase }}</span>
+		}
+		<h3 class="product-name">{{ product.sNameProduct }}</h3>
+
+		<div class="product-tags">
+			<div class="tag tag-interest">
+				<mat-icon>local_offer</mat-icon> Te puede interesar
+			</div>
+			<div class="tag tag-brand">
+				<mat-icon>storefront</mat-icon> Inkafarma
+			</div>
+		</div>
+
+		<div class="product-prices">
+			@if (product.nRegularPrice) {
+			<div class="price-row regular">
+				<span class="price-value">S/ {{ product.nRegularPrice | number:'1.2-2' }}</span>
+				<div class="sip-icons invisible">
+					<img src="assets/sip-black.svg" alt="Sip" class="sip-icon" />
+					<img src="assets/sip.svg" alt="Sip" class="sip-icon" />
+				</div>
+			</div>
+			}
+			@if (product.nPromotionalPrice) {
+			<div class="price-row promo">
+				<span class="price-value">S/ {{ product.nPromotionalPrice | number:'1.2-2' }}</span>
+				<div class="sip-icons invisible">
+					<img src="assets/sip-black.svg" alt="Sip" class="sip-icon" />
+					<img src="assets/sip.svg" alt="Sip" class="sip-icon" />
+				</div>
+				<app-discount-tag [percentage]="5" backgroundColor="#4a5568"></app-discount-tag>
+			</div>
+			}
+			@if (product.nCardPrice) {
+			<div class="price-row">
+				<span class="price-value">S/ {{ product.nCardPrice | number:'1.2-2' }}</span>
+				<div class="sip-icons">
+					<img src="assets/sip-black.svg" alt="Sip" class="sip-icon" />
+					<img src="assets/sip.svg" alt="Sip" class="sip-icon" />
+				</div>
+				<app-discount-tag [percentage]="20" backgroundColor="#00B1FF"></app-discount-tag>
+			</div>
+			}
+		</div>
+	</mat-card-content>
+
+	<mat-card-actions class="product-actions">
+		<button mat-flat-button class="btn-primary" (click)="onAddToCart($event)">Agregar al carrito</button>
+		<button mat-icon-button
+			class="btn-wishlist"
+			[class.is-favorite]="isFavorite()"
+			[class.is-animating]="isAnimating()"
+			(click)="toggleFavorite($event)">
+			<mat-icon>{{ isFavorite() ? 'favorite' : 'favorite_border' }}</mat-icon>
+			@if (isAnimating() && isFavorite()) {
+			<span class="heart-burst"></span>
+			}
+		</button>
+	</mat-card-actions>
+</mat-card>

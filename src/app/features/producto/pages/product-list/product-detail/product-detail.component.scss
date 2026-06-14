@@ -1,0 +1,173 @@
+.pdp-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+
+	.pdp-main-section {
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+		margin-bottom: 40px;
+
+		@media (min-width: 768px) {
+			flex-direction: row;
+		}
+
+		.product-gallery {
+			flex: 1;
+			display: flex;
+			gap: 20px;
+
+			.thumbnails {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+
+				.thumb-btn {
+					border: 1px solid #ddd;
+					background: white;
+					padding: 4px;
+					cursor: pointer;
+					width: 60px;
+					height: 60px;
+
+					&.active {
+						border-color: #109c5b;
+					}
+
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: contain;
+					}
+				}
+			}
+
+			.main-image {
+				flex: 1;
+
+				img {
+					width: 100%;
+					height: auto;
+					object-fit: contain;
+					max-height: 500px;
+				}
+			}
+		}
+
+		.product-info {
+			flex: 1;
+
+			.product-name {
+				font-size: 24px;
+				margin-bottom: 8px;
+			}
+
+			.sku {
+				color: #666;
+				font-size: 14px;
+				margin-bottom: 24px;
+			}
+
+			.prices {
+				background: #f9f9f9;
+				padding: 16px;
+				border-radius: 8px;
+				margin-bottom: 24px;
+
+				.price-row {
+					display: flex;
+					justify-content: space-between;
+					margin-bottom: 8px;
+
+					&:last-child {
+						margin-bottom: 0;
+					}
+
+					.promotional-price {
+						color: #e50000;
+						font-weight: bold;
+						font-size: 20px;
+					}
+
+					.card-price {
+						color: #e50000;
+						font-weight: bold;
+					}
+				}
+			}
+
+			.variants {
+				margin-bottom: 24px;
+
+				.variant-options {
+					display: flex;
+					gap: 12px;
+					margin-top: 8px;
+
+					.variant-btn {
+						border-color: #ccc;
+
+						&.selected {
+							border-color: #109c5b;
+							color: #109c5b;
+							background: #f0fdf4;
+						}
+					}
+				}
+			}
+
+			.actions {
+				.btn-primary {
+					width: 100%;
+					padding: 24px 14px;
+					background-color: #109c5b;
+					color: white;
+					border-radius: 24px;
+					font-size: 16px;
+					font-weight: bold;
+
+					&:hover {
+						background-color: #0e854d;
+					}
+				}
+			}
+		}
+	}
+
+	.pdp-secondary-section {
+		margin-bottom: 40px;
+	}
+
+	.pdp-cross-selling {
+		.carousel-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 24px;
+
+			h2 {
+				margin: 0;
+				font-size: 20px;
+			}
+		}
+
+		.carousel-container {
+			display: flex;
+			gap: 20px;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			padding-bottom: 16px;
+			scrollbar-width: none;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
+
+			.carousel-item {
+				scroll-snap-align: start;
+				flex: 0 0 250px;
+			}
+		}
+	}
+}

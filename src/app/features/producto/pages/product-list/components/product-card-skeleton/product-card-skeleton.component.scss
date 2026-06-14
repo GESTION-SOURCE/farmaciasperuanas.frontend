@@ -1,0 +1,94 @@
+:host {
+	display: contents;
+}
+
+// ── Skeleton shimmer animation ──
+@keyframes shimmer {
+	0% {
+		background-position: -400px 0;
+	}
+
+	100% {
+		background-position: 400px 0;
+	}
+}
+
+.skeleton-shimmer {
+	background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
+	background-size: 800px 100%;
+	animation: shimmer 1.5s ease-in-out infinite;
+	border-radius: 4px;
+}
+
+// ── Skeleton card ──
+.skeleton-card {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #e0e0e0;
+	border-radius: 12px;
+	overflow: hidden;
+	background: #fff;
+
+	.skeleton-image {
+		width: 100%;
+		aspect-ratio: 1;
+		border-radius: 0;
+	}
+
+	.skeleton-content {
+		padding: 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		flex-grow: 1;
+
+		.skeleton-brand {
+			width: 60px;
+			height: 12px;
+		}
+
+		.skeleton-name {
+			width: 100%;
+			height: 16px;
+
+			&.short {
+				width: 65%;
+			}
+		}
+
+		.skeleton-prices {
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+			margin-top: 4px;
+
+			.skeleton-price {
+				width: 80px;
+				height: 14px;
+			}
+
+			.skeleton-price-promo {
+				width: 100px;
+				height: 18px;
+			}
+		}
+
+		.skeleton-variant {
+			width: 90px;
+			height: 24px;
+			border-radius: 4px;
+			margin-top: 8px;
+		}
+	}
+
+	.skeleton-actions {
+		padding: 16px;
+		margin-top: auto;
+
+		.skeleton-button {
+			width: 100%;
+			height: 36px;
+			border-radius: 20px;
+		}
+	}
+}

@@ -1,0 +1,8 @@
+@if (isLoading()) {
+<div class="app-splash">
+    <img src="assets/isotipo-inkafarma.jpg" alt="Inkafarma" width="80" height="80">
+    <p>Cargando...</p>
+</div>
+} @else {
+<router-outlet></router-outlet>
+}
