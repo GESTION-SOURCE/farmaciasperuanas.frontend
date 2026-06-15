@@ -25,6 +25,8 @@ export class ProductCardComponent implements OnInit {
 	selectedVariant = signal<IVariant | null>(null);
 	isFavorite = signal(false);
 	isAnimating = signal(false);
+	isImageLoading = signal(true);
+	private imageLoadTimeout: any;
 
 	ngOnInit() {
 		if (this.product.aVariants && this.product.aVariants.length > 0) {
@@ -35,7 +37,18 @@ export class ProductCardComponent implements OnInit {
 	selectVariant(variant: IVariant, event: Event) {
 		event.stopPropagation();
 		event.preventDefault();
-		this.selectedVariant.set(variant);
+		if (this.selectedVariant()?.sId !== variant.sId) {
+			this.isImageLoading.set(true);
+			clearTimeout(this.imageLoadTimeout);
+			this.selectedVariant.set(variant);
+		}
+	}
+
+	onImageLoad() {
+		// Minimum delay to guarantee the animation is visible, providing a premium feel.
+		this.imageLoadTimeout = setTimeout(() => {
+			this.isImageLoading.set(false);
+		}, 350);
 	}
 
 	onAddToCart(event: Event) {

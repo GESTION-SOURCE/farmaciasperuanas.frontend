@@ -81,9 +81,10 @@
 
 	.app-buttons {
 		display: flex;
-		gap: 12px;
+		gap: 8px;
 
 		.btn-app {
+			width: 100%;
 			display: inline-flex;
 			align-items: center;
 			gap: 8px;
@@ -94,6 +95,7 @@
 			color: #354159;
 			font-size: 13px;
 			font-weight: 600;
+			justify-content: center;
 			transition: all 0.2s;
 
 			img {

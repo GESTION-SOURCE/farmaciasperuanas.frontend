@@ -6,7 +6,17 @@
 	</div>
 	} @else if (product(); as product) {
 
+	<!-- Breadcrumb -->
+	<nav class="breadcrumb">
+		<a routerLink="/">Inicio</a>
+		<mat-icon>chevron_right</mat-icon>
+		<a routerLink="/farmacia">Farmacia</a>
+		<mat-icon>chevron_right</mat-icon>
+		<span>Gripe</span>
+	</nav>
+
 	<div class="pdp-main-section">
+		<!-- Left Column: Gallery -->
 		<div class="product-gallery">
 			@if (product.aImages.length > 1) {
 			<div class="thumbnails">
@@ -22,50 +32,85 @@
 			</div>
 		</div>
 
+		<!-- Right Column: Info -->
 		<div class="product-info">
-			@if (product.sBrand) {
-			<span class="brand">{{ product.sBrand }}</span>
-			}
-			<h1 class="product-name">{{ product.sNameProduct }}</h1>
-			<p class="sku">SKU {{ product.sSku }}</p>
+			<!-- Header: Variant Name and SKU -->
+			<div class="info-header">
+				<span class="variant-name-top">{{ selectedVariant()?.sName | uppercase }}</span>
+				<span class="sku">SKU {{ product.sSku }}</span>
+			</div>
 
-			<div class="prices">
-				<div class="price-row">
-					<span>Precio regular</span>
-					@if (product.nRegularPrice) {
-					<span class="regular-price">S/ {{ product.nRegularPrice | number:'1.2-2' }}</span>
-					}
+			<!-- Title -->
+			<h1 class="product-name">{{ product.sNameProduct }}</h1>
+
+			<!-- Prices Block -->
+			<div class="prices-block">
+				@if (product.nRegularPrice) {
+				<div class="price-row regular" [class.has-discount]="product.nPromotionalPrice || product.nCardPrice">
+					<span class="label">Precio regular</span>
+					<span class="value">S/ {{ product.nRegularPrice | number:'1.2-2' }}</span>
 				</div>
+				}
 				@if (product.nPromotionalPrice) {
-				<div class="price-row">
-					<span>Precio promocional</span>
-					<span class="promotional-price">S/ {{ product.nPromotionalPrice | number:'1.2-2' }}</span>
+				<div class="price-row promo">
+					<span class="label">Precio promocional</span>
+					<div class="price-value-container">
+						<span class="value">S/ {{ product.nPromotionalPrice | number:'1.2-2' }}</span>
+						<app-discount-tag [percentage]="5" backgroundColor="#4a5568"></app-discount-tag>
+					</div>
 				</div>
 				}
 				@if (product.nCardPrice) {
-				<div class="price-row">
-					<span>Exclusivo con tarjeta</span>
-					<span class="card-price">S/ {{ product.nCardPrice | number:'1.2-2' }}</span>
+				<div class="price-row card">
+					<span class="label">Exclusivo con tarjeta</span>
+					<div class="price-value-container">
+						<div class="sip-icons">
+							<img src="assets/icons/sip-black.svg" alt="Sip" class="sip-icon" />
+							<img src="assets/icons/sip.svg" alt="Sip" class="sip-icon" />
+						</div>
+						<span class="value">S/ {{ product.nCardPrice | number:'1.2-2' }}</span>
+						<app-discount-tag [percentage]="20" backgroundColor="#00B1FF"></app-discount-tag>
+					</div>
 				</div>
 				}
 			</div>
 
+			<!-- Description Preview -->
+			<div class="description-preview">
+				<div [innerHTML]="product.sDescription"></div>
+				<a href="javascript:void(0)" class="ver-mas">Ver más</a>
+			</div>
+
+			<!-- Variants Selector -->
 			@if (product.aVariants.length > 0) {
-			<div class="variants">
+			<div class="variants-selector">
 				<p class="variant-label">Presentación: <strong>{{ selectedVariant()?.sName }}</strong></p>
-				<div class="variant-options">
+				<div class="variant-cards">
 					@for (variant of product.aVariants; track variant.sId) {
-					<button mat-stroked-button class="variant-btn"
-						[class.selected]="selectedVariant()?.sId === variant.sId" (click)="selectVariant(variant)">
-						{{ variant.sName }}
+					<button class="variant-card" [class.selected]="selectedVariant()?.sId === variant.sId"
+						(click)="selectVariant(variant)">
+						<div class="variant-img">
+							<img [src]="variant.sImage || product.aImages[0]" [alt]="variant.sName">
+						</div>
+						<div class="variant-details">
+							<span class="v-name">{{ variant.sName }}</span>
+							<span class="v-price">Desde S/ {{ variant.nPrice | number:'1.2-2' }}</span>
+						</div>
+						<div class="variant-radio">
+							<div class="radio-circle"></div>
+						</div>
 					</button>
 					}
 				</div>
 			</div>
 			}
 
+			<!-- Actions -->
 			<div class="actions">
 				<button mat-flat-button class="btn-primary" (click)="addToCart(product)">Agregar al carrito</button>
+				<button mat-icon-button class="btn-wishlist">
+					<mat-icon>favorite_border</mat-icon>
+				</button>
 			</div>
 		</div>
 	</div>

@@ -1,11 +1,14 @@
 <mat-card class="product-card" appearance="outlined">
 	<div class="product-image-container">
-		<img mat-card-image [src]="product.aImages[0]" [alt]="product.sNameProduct" loading="lazy"
-			class="product-image" />
+		@if (isImageLoading()) {
+		<div class="premium-shimmer"></div>
+		}
+		<img mat-card-image [src]="selectedVariant()?.sImage || product.aImages[0]" [alt]="product.sNameProduct" loading="lazy"
+			class="product-image" [class.loaded]="!isImageLoading()" (load)="onImageLoad()" />
 
 		<!-- Badge de oferta -->
 		@if (product.nPromotionalPrice) {
-		<img src="assets/oferta.png" alt="Oferta" class="oferta-badge" />
+		<img src="assets/images/oferta.png" alt="Oferta" class="oferta-badge" />
 		}
 	</div>
 
@@ -33,10 +36,10 @@
 
 		<div class="product-tags">
 			<div class="tag tag-interest">
-				<img src="assets/icon-tag-2.svg" alt="" class="tag-icon" /> Te puede interesar
+				<img src="assets/icons/icon-tag-2.svg" alt="" class="tag-icon" /> Te puede interesar
 			</div>
 			<div class="tag tag-brand">
-				<img src="assets/Icon-brand.svg" alt="" class="tag-icon" /> Inkafarma
+				<img src="assets/icons/Icon-brand.svg" alt="" class="tag-icon" /> Inkafarma
 			</div>
 		</div>
 
@@ -45,8 +48,8 @@
 			<div class="price-row" [class.regular]="product.nPromotionalPrice || product.nCardPrice">
 				<span class="price-value">S/ {{ product.nRegularPrice | number:'1.2-2' }}</span>
 				<div class="sip-icons invisible">
-					<img src="assets/sip-black.svg" alt="Sip" class="sip-icon" />
-					<img src="assets/sip.svg" alt="Sip" class="sip-icon" />
+					<img src="assets/icons/sip-black.svg" alt="Sip" class="sip-icon" />
+					<img src="assets/icons/sip.svg" alt="Sip" class="sip-icon" />
 				</div>
 			</div>
 			}
@@ -54,8 +57,8 @@
 			<div class="price-row promo">
 				<span class="price-value">S/ {{ product.nPromotionalPrice | number:'1.2-2' }}</span>
 				<div class="sip-icons invisible">
-					<img src="assets/sip-black.svg" alt="Sip" class="sip-icon" />
-					<img src="assets/sip.svg" alt="Sip" class="sip-icon" />
+					<img src="assets/icons/sip-black.svg" alt="Sip" class="sip-icon" />
+					<img src="assets/icons/sip.svg" alt="Sip" class="sip-icon" />
 				</div>
 				<app-discount-tag [percentage]="5" backgroundColor="#4a5568"></app-discount-tag>
 			</div>
@@ -64,8 +67,8 @@
 			<div class="price-row">
 				<span class="price-value">S/ {{ product.nCardPrice | number:'1.2-2' }}</span>
 				<div class="sip-icons">
-					<img src="assets/sip-black.svg" alt="Sip" class="sip-icon" />
-					<img src="assets/sip.svg" alt="Sip" class="sip-icon" />
+					<img src="assets/icons/sip-black.svg" alt="Sip" class="sip-icon" />
+					<img src="assets/icons/sip.svg" alt="Sip" class="sip-icon" />
 				</div>
 				<app-discount-tag [percentage]="20" backgroundColor="#00B1FF"></app-discount-tag>
 			</div>

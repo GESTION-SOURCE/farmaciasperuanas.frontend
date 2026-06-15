@@ -2,6 +2,7 @@ export interface IVariant {
 	sId: string;
 	sName: string;
 	nPrice: number;
+	sImage?: string;
 }
 
 export interface IProduct {

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal, ElementRef, ViewChild } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, UpperCasePipe } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,11 +10,12 @@ import { MockDataService } from '../../../../core/services/mock-data.service';
 import { SeoService } from '../../../../core/services/seo.service';
 import { AccordionComponent } from '../../../../shared/components/accordion/accordion.component';
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
+import { DiscountTagComponent } from '../../../../shared/components/discount-tag/discount-tag';
 
 @Component({
 	selector: 'app-product-detail',
 	standalone: true,
-	imports: [DecimalPipe, RouterModule, ProductCardComponent, AccordionComponent, MatButtonModule, MatIconModule],
+	imports: [DecimalPipe, RouterModule, ProductCardComponent, AccordionComponent, MatButtonModule, MatIconModule, DiscountTagComponent, UpperCasePipe],
 	templateUrl: './product-detail.component.html',
 	styleUrls: ['./product-detail.component.scss']
 })
