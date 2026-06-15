@@ -2,8 +2,6 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="box_productos">
-                <h1>Nuestros Productos</h1>
-
                 @if (isLoading()) {
                 <div class="product-grid">
                     <app-product-card-skeleton [count]="8" />

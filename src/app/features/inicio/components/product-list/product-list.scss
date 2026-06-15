@@ -1,8 +1,4 @@
 .box_productos {
-    h1 {
-        margin-bottom: 24px;
-    }
-
     .product-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
