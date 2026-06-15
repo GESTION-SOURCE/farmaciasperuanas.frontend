@@ -1,157 +1,176 @@
-<div class="pdp-container">
-	@if (isLoading()) {
-	<div class="loading-state">
-		<div class="spinner"></div>
-		<p>Cargando detalle del producto...</p>
-	</div>
-	} @else if (product(); as product) {
+<div class="container-fluid pdp-container">
+	<div class="row">
+		<div class="col-lg-12">
+			@if (isLoading()) {
+			<app-product-detail-skeleton></app-product-detail-skeleton>
+			} @else if (product(); as product) {
 
-	<!-- Breadcrumb -->
-	<nav class="breadcrumb">
-		<a routerLink="/">Inicio</a>
-		<mat-icon>chevron_right</mat-icon>
-		<a routerLink="/farmacia">Farmacia</a>
-		<mat-icon>chevron_right</mat-icon>
-		<span>Gripe</span>
-	</nav>
+			<!-- Breadcrumb -->
+			<nav class="breadcrumb">
+				<a routerLink="/">Inicio</a>
+				<mat-icon>chevron_right</mat-icon>
+				<a routerLink="/farmacia">Farmacia</a>
+				<mat-icon>chevron_right</mat-icon>
+				<span>Gripe</span>
+			</nav>
 
-	<div class="pdp-main-section">
-		<!-- Left Column: Gallery -->
-		<div class="product-gallery">
-			@if (product.aImages.length > 1) {
-			<div class="thumbnails">
-				@for (img of product.aImages; track img) {
-				<button class="thumb-btn" (click)="setMainImage(img)" [class.active]="mainImage() === img">
-					<img [src]="img" [alt]="product.sNameProduct" />
-				</button>
-				}
-			</div>
-			}
-			<div class="main-image">
-				<img [src]="mainImage()" [alt]="product.sNameProduct" />
-			</div>
-		</div>
-
-		<!-- Right Column: Info -->
-		<div class="product-info">
-			<!-- Header: Variant Name and SKU -->
-			<div class="info-header">
-				<span class="variant-name-top">{{ selectedVariant()?.sName | uppercase }}</span>
-				<span class="sku">SKU {{ product.sSku }}</span>
-			</div>
-
-			<!-- Title -->
-			<h1 class="product-name">{{ product.sNameProduct }}</h1>
-
-			<!-- Prices Block -->
-			<div class="prices-block">
-				@if (product.nRegularPrice) {
-				<div class="price-row regular" [class.has-discount]="product.nPromotionalPrice || product.nCardPrice">
-					<span class="label">Precio regular</span>
-					<span class="value">S/ {{ product.nRegularPrice | number:'1.2-2' }}</span>
-				</div>
-				}
-				@if (product.nPromotionalPrice) {
-				<div class="price-row promo">
-					<span class="label">Precio promocional</span>
-					<div class="price-value-container">
-						<span class="value">S/ {{ product.nPromotionalPrice | number:'1.2-2' }}</span>
-						<app-discount-tag [percentage]="5" backgroundColor="#4a5568"></app-discount-tag>
+			<div class="pdp-main-section">
+				<!-- Left Column: Gallery -->
+				<div class="product-gallery">
+					@if (product.aImages.length > 1) {
+					<div class="thumbnails-wrapper">
+						<button mat-icon-button class="nav-btn up" (click)="scrollThumbnails('up')">
+							<mat-icon>keyboard_arrow_up</mat-icon>
+						</button>
+						<div class="thumbnails" #thumbnailsContainer (mousedown)="onThumbnailsMouseDown($event)"
+							(mouseleave)="onThumbnailsMouseLeave()" (mouseup)="onThumbnailsMouseUp()"
+							(mousemove)="onThumbnailsMouseMove($event)">
+							@for (img of product.aImages; track img; let i = $index) {
+							<button class="thumb-btn" (click)="setMainImage(img)" [class.active]="mainImage() === img">
+								<img [src]="product.aThumbnails && product.aThumbnails[i] ? product.aThumbnails[i] : img"
+									[alt]="product.sNameProduct" draggable="false" />
+							</button>
+							}
+						</div>
+						<button mat-icon-button class="nav-btn down" (click)="scrollThumbnails('down')">
+							<mat-icon>keyboard_arrow_down</mat-icon>
+						</button>
+					</div>
+					}
+					<div class="main-image" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
+						<img [src]="mainImage()" [alt]="product.sNameProduct" [style.transformOrigin]="zoomOrigin()"
+							[class.zoomed]="isZoomed()" />
 					</div>
 				</div>
-				}
-				@if (product.nCardPrice) {
-				<div class="price-row card">
-					<span class="label">Exclusivo con tarjeta</span>
-					<div class="price-value-container">
-						<div class="sip-icons">
-							<img src="assets/icons/sip-black.svg" alt="Sip" class="sip-icon" />
-							<img src="assets/icons/sip.svg" alt="Sip" class="sip-icon" />
+
+				<!-- Right Column: Info -->
+				<div class="product-info">
+					<!-- Header: Variant Name and SKU -->
+					<div class="info-header">
+						<span class="variant-name-top">{{ selectedVariant()?.sName | uppercase }}</span>
+						<span class="sku">SKU {{ product.sSku }}</span>
+					</div>
+
+					<!-- Title -->
+					<h1 class="product-name">{{ product.sNameProduct }}</h1>
+
+					<!-- Prices Block -->
+					<div class="prices-block">
+						@if (product.nRegularPrice) {
+						<div class="price-row regular"
+							[class.has-discount]="product.nPromotionalPrice || product.nCardPrice">
+							<span class="label">Precio regular</span>
+							<span class="value">S/ {{ product.nRegularPrice | number:'1.2-2' }}</span>
 						</div>
-						<span class="value">S/ {{ product.nCardPrice | number:'1.2-2' }}</span>
-						<app-discount-tag [percentage]="20" backgroundColor="#00B1FF"></app-discount-tag>
+						}
+						@if (product.nPromotionalPrice) {
+						<div class="price-row promo">
+							<span class="label">Precio promocional</span>
+							<div class="price-value-container">
+								<span class="value">S/ {{ product.nPromotionalPrice | number:'1.2-2' }}</span>
+								<app-discount-tag [percentage]="5" backgroundColor="#4a5568"></app-discount-tag>
+							</div>
+						</div>
+						}
+						@if (product.nCardPrice) {
+						<div class="price-row card">
+							<span class="label">Exclusivo con tarjeta</span>
+							<div class="price-value-container">
+								<div class="sip-icons">
+									<img src="assets/icons/sip-black.svg" alt="Sip" class="sip-icon" />
+									<img src="assets/icons/sip.svg" alt="Sip" class="sip-icon" />
+								</div>
+								<span class="value">S/ {{ product.nCardPrice | number:'1.2-2' }}</span>
+								<app-discount-tag [percentage]="20" backgroundColor="#00B1FF"></app-discount-tag>
+							</div>
+						</div>
+						}
+					</div>
+
+					<!-- Description Preview -->
+					<div class="description-preview" [class.expanded]="isDescriptionExpanded()">
+						<div class="desc-content" [innerHTML]="product.sDescription" #descContent></div>
+						@if (showVerMasBtn()) {
+						<a href="javascript:void(0)" class="ver-mas" (click)="toggleDescription()">
+							{{ isDescriptionExpanded() ? 'Ver menos' : 'Ver más' }}
+						</a>
+						}
+					</div>
+
+					<!-- Variants Selector -->
+					@if (product.aVariants.length > 0) {
+					<div class="variants-selector">
+						<p class="variant-label">Presentación: <strong>{{ selectedVariant()?.sName }}</strong></p>
+						<div class="variant-cards">
+							@for (variant of product.aVariants; track variant.sId) {
+							<button class="variant-card" [class.selected]="selectedVariant()?.sId === variant.sId"
+								(click)="selectVariant(variant)">
+								<div class="variant-img">
+									<img [src]="variant.sImage || product.aImages[0]" [alt]="variant.sName">
+								</div>
+								<div class="variant-details">
+									<span class="v-name">{{ variant.sName }}</span>
+									<span class="v-price">Desde S/ {{ variant.nPrice | number:'1.2-2' }}</span>
+								</div>
+								<div class="variant-radio">
+									<div class="radio-circle">
+										<span class="radio-dot"></span>
+									</div>
+								</div>
+							</button>
+							}
+						</div>
+					</div>
+					}
+
+					<!-- Actions -->
+					<div class="actions">
+						<button mat-flat-button class="btn-primary" (click)="addToCart(product)">Agregar al
+							carrito</button>
+						<app-favorite-button [productName]="product.sNameProduct"></app-favorite-button>
 					</div>
 				</div>
-				}
 			</div>
 
-			<!-- Description Preview -->
-			<div class="description-preview">
-				<div [innerHTML]="product.sDescription"></div>
-				<a href="javascript:void(0)" class="ver-mas">Ver más</a>
+			<div class="pdp-secondary-section">
+				<app-accordion title="Descripción larga" [expanded]="true">
+					<p>{{ product.sDescription }}</p>
+					<p>{{ product.sLongDescription }}</p>
+				</app-accordion>
+				<app-accordion title="Composición">
+					<p>{{ product.sComposition }}</p>
+				</app-accordion>
+				<app-accordion title="Contraindicaciones">
+					<p>{{ product.sContraindications }}</p>
+				</app-accordion>
 			</div>
 
-			<!-- Variants Selector -->
-			@if (product.aVariants.length > 0) {
-			<div class="variants-selector">
-				<p class="variant-label">Presentación: <strong>{{ selectedVariant()?.sName }}</strong></p>
-				<div class="variant-cards">
-					@for (variant of product.aVariants; track variant.sId) {
-					<button class="variant-card" [class.selected]="selectedVariant()?.sId === variant.sId"
-						(click)="selectVariant(variant)">
-						<div class="variant-img">
-							<img [src]="variant.sImage || product.aImages[0]" [alt]="variant.sName">
-						</div>
-						<div class="variant-details">
-							<span class="v-name">{{ variant.sName }}</span>
-							<span class="v-price">Desde S/ {{ variant.nPrice | number:'1.2-2' }}</span>
-						</div>
-						<div class="variant-radio">
-							<div class="radio-circle"></div>
-						</div>
-					</button>
+			<div class="pdp-cross-selling">
+				<div class="carousel-header">
+					<h2>Lo más buscado</h2>
+					<div class="carousel-controls">
+						<button mat-icon-button (click)="scrollCarousel('left')" aria-label="Anterior">
+							<mat-icon>chevron_left</mat-icon>
+						</button>
+						<button mat-icon-button (click)="scrollCarousel('right')" aria-label="Siguiente">
+							<mat-icon>chevron_right</mat-icon>
+						</button>
+					</div>
+				</div>
+
+				@if (crossSellingProducts().length > 0) {
+				<div class="carousel-container" #carousel>
+					@for (item of crossSellingProducts(); track item.sId) {
+					<div class="carousel-item">
+						<app-product-card [product]="item" (addToCart)="onCrossSellingAddToCart($event)">
+						</app-product-card>
+					</div>
 					}
 				</div>
+				}
 			</div>
-			}
 
-			<!-- Actions -->
-			<div class="actions">
-				<button mat-flat-button class="btn-primary" (click)="addToCart(product)">Agregar al carrito</button>
-				<button mat-icon-button class="btn-wishlist">
-					<mat-icon>favorite_border</mat-icon>
-				</button>
-			</div>
-		</div>
-	</div>
-
-	<div class="pdp-secondary-section">
-		<app-accordion title="Descripción larga" [expanded]="true">
-			<p>{{ product.sDescription }}</p>
-			<p>{{ product.sLongDescription }}</p>
-		</app-accordion>
-		<app-accordion title="Composición">
-			<p>{{ product.sComposition }}</p>
-		</app-accordion>
-		<app-accordion title="Contraindicaciones">
-			<p>{{ product.sContraindications }}</p>
-		</app-accordion>
-	</div>
-
-	<div class="pdp-cross-selling">
-		<div class="carousel-header">
-			<h2>Lo más buscado</h2>
-			<div class="carousel-controls">
-				<button mat-icon-button (click)="scrollCarousel('left')" aria-label="Anterior">
-					<mat-icon>chevron_left</mat-icon>
-				</button>
-				<button mat-icon-button (click)="scrollCarousel('right')" aria-label="Siguiente">
-					<mat-icon>chevron_right</mat-icon>
-				</button>
-			</div>
-		</div>
-
-		@if (crossSellingProducts().length > 0) {
-		<div class="carousel-container" #carousel>
-			@for (item of crossSellingProducts(); track item.sId) {
-			<div class="carousel-item">
-				<app-product-card [product]="item" (addToCart)="onCrossSellingAddToCart($event)">
-				</app-product-card>
-			</div>
 			}
 		</div>
-		}
 	</div>
-
-	}
 </div>

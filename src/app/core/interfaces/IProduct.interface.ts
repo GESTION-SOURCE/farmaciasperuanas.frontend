@@ -14,6 +14,7 @@ export interface IProduct {
 	sComposition: string;
 	sContraindications: string;
 	aImages: string[];
+	aThumbnails?: string[];
 	nRegularPrice: number;
 	nPromotionalPrice?: number;
 	nCardPrice?: number;

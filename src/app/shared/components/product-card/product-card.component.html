@@ -78,12 +78,6 @@
 
 	<mat-card-actions class="product-actions">
 		<button mat-flat-button class="btn-primary" (click)="onAddToCart($event)">Agregar al carrito</button>
-		<button mat-icon-button class="btn-wishlist" [class.is-favorite]="isFavorite()"
-			[class.is-animating]="isAnimating()" (click)="toggleFavorite($event)">
-			<mat-icon>{{ isFavorite() ? 'favorite' : 'favorite_border' }}</mat-icon>
-			@if (isAnimating() && isFavorite()) {
-			<span class="heart-burst"></span>
-			}
-		</button>
+		<app-favorite-button [productName]="product.sNameProduct"></app-favorite-button>
 	</mat-card-actions>
 </mat-card>
