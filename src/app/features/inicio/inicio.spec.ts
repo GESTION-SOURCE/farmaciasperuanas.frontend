@@ -1,19 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { vi } from 'vitest';
 
 import { Inicio } from './inicio';
 
 describe('Inicio', () => {
   let component: Inicio;
   let fixture: ComponentFixture<Inicio>;
-  let titleServiceSpy: jasmine.SpyObj<Title>;
+  let titleServiceSpy: any;
 
   beforeEach(async () => {
-    titleServiceSpy = jasmine.createSpyObj('Title', ['setTitle']);
+    titleServiceSpy = {
+      setTitle: vi.fn()
+    };
 
     await TestBed.configureTestingModule({
       imports: [Inicio],
       providers: [
+        provideRouter([]),
         { provide: Title, useValue: titleServiceSpy }
       ]
     })
