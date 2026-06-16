@@ -83,8 +83,11 @@ export class ProductDetailComponent implements OnInit {
 
 	selectVariant(variant: IVariant): void {
 		this.selectedVariant.set(variant);
+		const product = this.product();
 		if (variant.sImage) {
 			this.setMainImage(variant.sImage);
+		} else if (product?.aImages?.length) {
+			this.setMainImage(product.aImages[0]);
 		}
 	}
 
@@ -103,8 +106,6 @@ export class ProductDetailComponent implements OnInit {
 			this.analyticsService.trackAddToCart(product, variant, 1);
 		}
 	}
-
-
 
 	checkDescriptionOverflow(): void {
 		if (this.descContent) {
