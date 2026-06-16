@@ -85,7 +85,8 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "watch": false,
-            "coverage": true
+            "coverage": true,
+            "coverageReporters": ["lcov", "text-summary"]
           }
         }
       }

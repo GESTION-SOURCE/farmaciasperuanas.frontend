@@ -33,12 +33,12 @@
 			@for (item of cartService.cartItems(); track item.sId) {
 			<li class="cart-item">
 				<div class="item-img">
-					<img [src]="item.oVariant?.sImage || item.oProduct?.aImages?.[0] || 'assets/placeholder.png'" [alt]="item.oProduct?.sNameProduct || 'Producto'">
+					<img [src]="item.oVariant.sImage || item.oProduct.aImages?.[0] || 'assets/placeholder.png'" [alt]="item.oProduct.sNameProduct || 'Producto'">
 				</div>
 				<div class="item-details">
-					<h3 class="item-name">{{ item.oProduct?.sNameProduct }}</h3>
-					<span class="item-variant">{{ item.oVariant?.sName }}</span>
-					<span class="item-price">S/ {{ item.oVariant?.nPrice | number:'1.2-2' }}</span>
+					<h3 class="item-name">{{ item.oProduct.sNameProduct }}</h3>
+					<span class="item-variant">{{ item.oVariant.sName }}</span>
+					<span class="item-price">S/ {{ item.oVariant.nPrice | number:'1.2-2' }}</span>
 					
 					<div class="item-actions">
 						<div class="quantity-control">
