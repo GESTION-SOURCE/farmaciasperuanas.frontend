@@ -28,7 +28,7 @@
 							@for (img of product.aImages; track img; let i = $index) {
 							<button class="thumb-btn" (click)="setMainImage(img)" [class.active]="mainImage() === img">
 								<img [src]="product.aThumbnails && product.aThumbnails[i] ? product.aThumbnails[i] : img"
-									[alt]="product.sNameProduct" draggable="false" />
+									[alt]="product.sNameProduct" loading="lazy" decoding="async" draggable="false" />
 							</button>
 							}
 						</div>
@@ -39,7 +39,7 @@
 					}
 					<div class="main-image" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
 						<img [src]="mainImage()" [alt]="product.sNameProduct" [style.transformOrigin]="zoomOrigin()"
-							[class.zoomed]="isZoomed()" />
+							[class.zoomed]="isZoomed()" fetchpriority="high" decoding="sync" />
 					</div>
 				</div>
 
@@ -106,7 +106,7 @@
 							<button class="variant-card" [class.selected]="selectedVariant()?.sId === variant.sId"
 								(click)="selectVariant(variant)">
 								<div class="variant-img">
-									<img [src]="variant.sImage || product.aImages[0]" [alt]="variant.sName">
+									<img [src]="variant.sImage || product.aImages[0]" [alt]="variant.sName" loading="lazy" decoding="async">
 								</div>
 								<div class="variant-details">
 									<span class="v-name">{{ variant.sName }}</span>

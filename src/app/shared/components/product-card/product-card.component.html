@@ -3,7 +3,7 @@
 		@if (isImageLoading()) {
 		<div class="premium-shimmer"></div>
 		}
-		<img mat-card-image [src]="selectedVariant()?.sImage || product.aImages[0]" [alt]="product.sNameProduct" loading="lazy"
+		<img mat-card-image [src]="selectedVariant()?.sImage || product.aImages[0]" [alt]="product.sNameProduct" loading="lazy" decoding="async"
 			class="product-image" [class.loaded]="!isImageLoading()" (load)="onImageLoad()" draggable="false" />
 
 		<!-- Badge de oferta -->
