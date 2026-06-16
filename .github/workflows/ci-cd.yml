@@ -36,6 +36,12 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar Pruebas Unitarias y Generar Cobertura
+        run: npx ng test --watch=false --code-coverage
+
       - name: Escaneo de SonarQube
         uses: SonarSource/sonarqube-scan-action@v2
         env:
