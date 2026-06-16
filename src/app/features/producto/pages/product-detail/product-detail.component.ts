@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { DecimalPipe, UpperCasePipe } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { IProduct, IVariant } from '../../../../core/interfaces/IProduct.interface';
@@ -24,6 +24,7 @@ import { MostSearchedProductsComponent } from './components/most-searched-produc
 })
 export class ProductDetailComponent implements OnInit {
 	private route = inject(ActivatedRoute);
+	private router = inject(Router);
 	private mockDataService = inject(MockDataService);
 	private cartService = inject(CartService);
 	private seoService = inject(SeoService);
@@ -68,6 +69,8 @@ export class ProductDetailComponent implements OnInit {
 						this.mainImage.set(product.aImages[0]);
 					}
 					setTimeout(() => this.checkDescriptionOverflow(), 50);
+				} else {
+					this.router.navigate(['/404'], { replaceUrl: true });
 				}
 				this.isLoading.set(false);
 			});

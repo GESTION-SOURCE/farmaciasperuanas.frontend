@@ -91,9 +91,9 @@
 					<div class="description-preview" [class.expanded]="isDescriptionExpanded()">
 						<div class="desc-content" [innerHTML]="product.sDescription" #descContent></div>
 						@if (showVerMasBtn()) {
-						<a href="javascript:void(0)" class="ver-mas" (click)="toggleDescription()">
+						<button type="button" class="ver-mas btn-link" (click)="toggleDescription()">
 							{{ isDescriptionExpanded() ? 'Ver menos' : 'Ver más' }}
-						</a>
+						</button>
 						}
 					</div>
 
@@ -106,7 +106,8 @@
 							<button class="variant-card" [class.selected]="selectedVariant()?.sId === variant.sId"
 								(click)="selectVariant(variant)">
 								<div class="variant-img">
-									<img [src]="variant.sImage || product.aImages[0]" [alt]="variant.sName" loading="lazy" decoding="async">
+									<img [src]="variant.sImage || product.aImages[0]" [alt]="variant.sName"
+										loading="lazy" decoding="async">
 								</div>
 								<div class="variant-details">
 									<span class="v-name">{{ variant.sName }}</span>
