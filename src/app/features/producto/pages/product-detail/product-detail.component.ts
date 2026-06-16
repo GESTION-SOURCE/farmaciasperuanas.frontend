@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ElementRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { DecimalPipe, UpperCasePipe } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +19,8 @@ import { MostSearchedProductsComponent } from './components/most-searched-produc
 	standalone: true,
 	imports: [DecimalPipe, RouterModule, AccordionComponent, MatButtonModule, MatIconModule, DiscountTagComponent, UpperCasePipe, FavoriteButton, ProductDetailSkeletonComponent, MostSearchedProductsComponent],
 	templateUrl: './product-detail.component.html',
-	styleUrl: './product-detail.component.scss'
+	styleUrl: './product-detail.component.scss',
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductDetailComponent implements OnInit {
 	private route = inject(ActivatedRoute);
