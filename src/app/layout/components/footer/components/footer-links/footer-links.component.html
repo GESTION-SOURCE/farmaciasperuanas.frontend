@@ -1,0 +1,6 @@
+<h4 class="footer-title">{{ section.title }}</h4>
+<ul class="footer-links">
+	@for (link of section.links; track $index) {
+	<li><a [routerLink]="link.url">{{ link.text }}</a></li>
+	}
+</ul>
