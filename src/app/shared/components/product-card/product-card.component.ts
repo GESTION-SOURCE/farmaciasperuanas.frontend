@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, signal, OnInit, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DecimalPipe, UpperCasePipe } from '@angular/common';
 import { IProduct, IVariant } from '../../../core/interfaces/IProduct.interface';
 import { RouterModule } from '@angular/router';
@@ -14,7 +14,8 @@ import { FavoriteButton } from '../favorite-button/favorite-button';
 	standalone: true,
 	imports: [DecimalPipe, UpperCasePipe, RouterModule, MatCardModule, MatButtonModule, MatIconModule, MatSnackBarModule, DiscountTagComponent, FavoriteButton],
 	templateUrl: './product-card.component.html',
-	styleUrls: ['./product-card.component.scss']
+	styleUrls: ['./product-card.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCardComponent implements OnInit {
 	@Input({ required: true }) product!: IProduct;
@@ -43,10 +44,7 @@ export class ProductCardComponent implements OnInit {
 	}
 
 	onImageLoad() {
-		// Minimum delay to guarantee the animation is visible, providing a premium feel.
-		this.imageLoadTimeout = setTimeout(() => {
-			this.isImageLoading.set(false);
-		}, 350);
+		this.isImageLoading.set(false);
 	}
 
 	onAddToCart(event: Event) {
