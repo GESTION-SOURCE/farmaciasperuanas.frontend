@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductDetailComponent } from './product-detail.component';
 import { ActivatedRoute, Router, provideRouter } from '@angular/router';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { vi } from 'vitest';
 import { MockDataService } from '../../../../core/services/mock-data.service';
@@ -49,7 +48,6 @@ describe('ProductDetailComponent', () => {
       imports: [ProductDetailComponent],
       providers: [
         provideRouter([]),
-        provideNoopAnimations(),
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: MockDataService, useValue: mockDataService },
         { provide: CartService, useValue: mockCartService },
@@ -84,7 +82,8 @@ describe('ProductDetailComponent', () => {
       sId: '123',
       sNameProduct: 'Test Product',
       sDescription: 'Test Description that is quite long enough to pass.',
-      aImages: ['image1.jpg']
+      aImages: ['image1.jpg'],
+      aVariants: []
     };
     mockDataService.getProductById.mockReturnValue(of(mockProduct));
 
