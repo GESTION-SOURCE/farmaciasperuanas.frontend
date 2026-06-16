@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ProductListComponent } from './components/product-list/product-list';
 
 @Component({
@@ -7,6 +8,10 @@ import { ProductListComponent } from './components/product-list/product-list';
 	templateUrl: './inicio.html',
 	styleUrl: './inicio.scss',
 })
-export class Inicio {
+export class Inicio implements OnInit {
+	private titleService = inject(Title);
 
+	ngOnInit(): void {
+		this.titleService.setTitle('Farmacia Online Inkafarma | Promociones y delivery con Inkaprecios');
+	}
 }
