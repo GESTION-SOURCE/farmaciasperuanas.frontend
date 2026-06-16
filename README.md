@@ -29,31 +29,35 @@ Este proyecto es una aplicación frontend desarrollada en **Angular (Standalone 
 
 ## Respuestas a las Preguntas de Arquitectura y Negocio
 
-### 1. Decisiones de Escalabilidad
-Se adoptó una arquitectura **Modular y Basada en Standalone Components**. La aplicación divide lógicamente las responsabilidades en:
-- **Core (`/core`)**: Servicios Singleton (ej. `CartService`, `MockDataService`, `SeoService`, `AnalyticsService`) y Modelos estandarizados. Totalmente desacoplados de la UI.
-- **Shared (`/shared`)**: Componentes "Dumb" puramente presentacionales y reutilizables (`ProductCardComponent`, `AccordionComponent`). Usan el patrón `@Input`/`@Output` para evitar estado local complejo.
-- **Pages (`/pages`)**: Componentes "Smart" ruteados mediante **Lazy Loading**. La Product Detail Page (PDP) se carga independientemente dentro del contexto jerárquico. 
+### 1. ¿Qué decisiones tomaste para mejorar la performance en esta página?
+- **Server-Side Rendering (SSR)**: Se habilitó el renderizado en el servidor para despachar HTML pre-renderizado, mejorando notablemente el First Contentful Paint (FCP) y reduciendo el tiempo hasta que la página es visible.
+- **Gestión de Estado Eficiente**: Uso de **Angular Signals** para un estado reactivo de alto rendimiento, evitando ciclos de detección de cambios innecesarios que penalizan la interacción.
+- **Tree-Shaking**: Se importaron módulos específicos de Angular Material (ej. `MatButtonModule`) en lugar del paquete completo, lo que reduce drásticamente el tamaño final del bundle (First Load JS).
+- **Lazy Loading**: La aplicación se estructuró con rutas en carga diferida (ej. Product Detail Page), cargando el JavaScript del módulo solo cuando el usuario navega hacia él.
 
-Esta estructura garantiza que, a medida que el negocio crezca y se agreguen nuevos módulos (ej. Checkout o Mi Perfil), el peso inicial de la aplicación se mantenga ligero y el código mantenible.
+### 2. ¿Cómo estructurarías esta solución para soportar múltiples marcas con diferentes estilos?
+- **Sistema de Diseño basado en Tokens**: Utilizaría variables SCSS (CSS Custom Properties) para definir tokens visuales (colores primarios, tipografía, radios de borde).
+- **Arquitectura Multitenant en UI**: Mantendría la lógica y estructura base intacta en `core` y `shared`, y aplicaría un **Theming** inyectado por configuración.
+- En Angular, esto se puede manejar configurando diferentes `projects` o `configurations` en el archivo `angular.json`, cada uno apuntando a un archivo `theme.scss` específico por marca (ej. `theme-inkafarma.scss`, `theme-mifarma.scss`), permitiendo compilar versiones distintas del mismo código base.
 
-### 2. Optimización del LCP (Largest Contentful Paint)
-Para asegurar que la métrica más importante de las Core Web Vitals se mantenga en márgenes óptimos:
-- Se aprovechó el renderizado nativo en el servidor (SSR) para despachar el HTML pre-hidratado al navegador.
-- La imagen principal de la galería de productos (`mainImage`) y las imágenes del listado se sirven dinámicamente y se utiliza CSS Grid moderno para evitar re-flujos pesados de redibujado (CLS).
-- Angular Material se ha importado estrictamente por componentes (ej. `MatButtonModule`, `MatCardModule`), en vez de importar el paquete global entero, garantizando un "tree-shaking" que disminuye drásticamente el First Load JS payload.
+### 3. Si esta página presenta problemas de LCP en producción, ¿cómo lo abordarías?
+- **Auditoría con DevTools**: Identificaría primero cuál es el Largest Contentful Paint (suele ser la imagen principal del producto).
+- **Optimización de la Imagen LCP**: 
+  - Asegurar el uso de formatos modernos (WebP, AVIF).
+  - Configurar atributos `priority` o usar `<link rel="preload" as="image">` para que el navegador descargue la imagen hero lo antes posible.
+  - Implementar `srcset` y `sizes` para descargar una imagen de dimensiones adecuadas según el dispositivo.
+- **Estrategias de Caché y CDN**: Asegurar que una Red de Distribución de Contenido (CDN) cachee el HTML generado por el SSR y los assets estáticos.
+- **Evitar re-flujos**: Reservar el espacio exacto en el layout (CSS aspect-ratio) para las imágenes y evitar un CLS que penalice la métrica relacionada al layout.
 
-### 3. Server-Side Rendering (SSR) y Prerendering
-Se utilizó el soporte nativo de SSR en Angular (`@angular/ssr`). El principal desafío para el SEO en el eCommerce residía en que la ruta de la PDP (`/products/:id`) es dinámica e infinita. 
-Para resolverlo, en `app.routes.server.ts`, se configuró explícitamente el `RenderMode.Server` para el segmento dinámico. Esto asegura que los metadatos dinámicos generados por el `SeoService` (como `<title>` y `<meta description>`) se inyecten desde el Node.js server antes de devolver el Response al cliente. Así, los crawlers de los motores de búsqueda acceden a un HTML completamente indexable con la información de precios, títulos e imágenes actualizadas.
+### 4. ¿Cómo evitarías que eventos de Analytics se disparen múltiples veces en una SPA?
+- **Servicio Centralizado (`AnalyticsService`)**: Encapsular el objeto `dataLayer` y controlar todos los flujos de eventos desde un único servicio Singleton.
+- **Protección SSR**: Envolver el acceso a herramientas de tracking usando `isPlatformBrowser()` de Angular, asegurando que los scripts no se ejecuten desde el servidor durante el ciclo SSR.
+- **Control Reactivo (RxJS)**: Al suscribirse a eventos del enrutador de Angular (ej. `NavigationEnd`), aplicaría operadores como `distinctUntilChanged()` y `filter` para asegurarme de que el evento de vista (ej. `view_item`) solo se despache si el usuario navega realmente a un nuevo producto.
+- **Manejo de Estado Interno**: Registrar temporalmente (debouncing) el último evento enviado para evitar disparos duplicados frente a clics accidentales o re-renders de la interfaz.
 
-### 4. Prevención de Duplicidad de Eventos en el DataLayer (SPA)
-En una SPA, navegar de forma asíncrona entre vistas a menudo causa que los eventos se encolen incorrectamente.
-- La prevención se logró creando un **`AnalyticsService`** como único punto de acceso y entrada para los eventos `dataLayer.push`.
-- En la PDP, el evento `view_item` se despacha exclusivamente en el pipeline asíncrono exacto cuando la URL se resuelve correctamente mediante el operador reactivo de RxJS (`tap` dentro de `switchMap`).
-- Además, en el `AnalyticsService`, implementamos el check de seguridad `isPlatformBrowser()` de `@angular/common`. Esto garantiza que los píxeles de marketing, dependientes del objeto DOM `window`, jamás se ejecuten durante el ciclo de vida del SSR del servidor de Node.js, bloqueando la polución de analíticas.
-
-### 5. Elección de Gestión de Estado: Signals + RxJS
-Se fusionaron ambas filosofías modernas sacando la mayor ventaja:
-- **RxJS**: Excelente en el manejo asíncrono y control de tiempo. Lo utilizamos para la navegación (`ParamMap`), interceptaciones asíncronas y simulación del retardo de la red en los *Mocks*.
-- **Angular Signals**: Utilizado en `CartService` para la gestión en memoria síncrona. Mediante primitivas (`signal` y `computed`) logramos un Reactivity Tree de altísima performance y mediante el primitivo `effect()` garantizamos la persistencia atómica hacia el `localStorage` en cada modificación del carrito. Reemplaza la pesadez de Redux (NGRX) en apps de escala intermedia/avanzada.
+### 5. ¿Qué consideraciones SEO tendrías en cuenta para esta página en un entorno real?
+- **Mantenimiento del SSR**: Garantizar que el Server-Side Rendering funcione para las páginas críticas (PLP y PDP), de forma que los bots de Google lean la información de productos al instante, sin ejecutar JS.
+- **Meta-tags Dinámicos**: Uso de `Title` y `Meta` services de Angular para actualizar el `<title>`, `<meta name="description">` y Open Graph tags dinámicamente basados en el producto cargado.
+- **Datos Estructurados (Schema.org)**: Inyectar JSON-LD en el HTML de la PDP (tipo `Product`) para mostrar Rich Snippets en los resultados de búsqueda (estrellas, precio, disponibilidad).
+- **Etiquetas Canónicas (Canonical URLs)**: Declarar dinámicamente un `<link rel="canonical">` apuntando a la URL base del producto, para que variaciones de parámetros (ej. `?size=big`) no diluyan la autoridad o causen contenido duplicado.
+- **Optimización del Crawl Budget**: Generar y mantener un `sitemap.xml` dinámico y un `robots.txt` adecuado para priorizar las páginas de catálogo y omitir rutas privadas (como el checkout).
