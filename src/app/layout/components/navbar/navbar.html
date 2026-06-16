@@ -4,7 +4,8 @@
 			<div class="row align-items-center navbar-row">
 				<!-- Hamburger Menu Button -->
 				<button class="mobile-menu-btn d-lg-none" (click)="toggleMobileMenu()">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#354159" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#354159" stroke-width="2"
+						stroke-linecap="round" stroke-linejoin="round">
 						<line x1="3" y1="12" x2="21" y2="12"></line>
 						<line x1="3" y1="6" x2="21" y2="6"></line>
 						<line x1="3" y1="18" x2="21" y2="18"></line>
@@ -12,16 +13,16 @@
 				</button>
 
 				<div class="navbar-logo-container">
-					<a routerLink="/inicio" class="navbar-logo">
-						<img src="assets/logos/logotipo-inkafarma.svg" alt="Inkafarma" fetchpriority="high" decoding="sync">
+					<a routerLink="/" class="navbar-logo">
+						<img src="assets/logos/logotipo-inkafarma.svg" alt="Inkafarma" fetchpriority="high"
+							decoding="sync">
 					</a>
 				</div>
 
 				<!-- Search Bar -->
 				<div class="navbar-search-container">
 					<div class="search-bar">
-						<input type="text" placeholder="Busca una marca o producto" 
-							(focus)="isSearchFocused = true" 
+						<input type="text" placeholder="Busca una marca o producto" (focus)="isSearchFocused = true"
 							(blur)="isSearchFocused = false">
 						<button class="search-btn">
 							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -49,14 +50,14 @@
 		<div class="container-fluid">
 			<div class="row">
 				<ul class="categories-list">
-					<li><a href="#">Dermocosmética</a></li>
-					<li><a href="#">Farmacia</a></li>
-					<li><a href="#">Bienestar</a></li>
-					<li><a href="#">Infantil</a></li>
-					<li><a href="#">Fotoprotección</a></li>
-					<li><a href="#">Inkaclub</a></li>
-					<li><a href="#">Tienda 24 hrs.</a></li>
-					<li><a href="#">Catálogo</a></li>
+					<li><a routerLink="/">Dermocosmética</a></li>
+					<li><a routerLink="/">Farmacia</a></li>
+					<li><a routerLink="/">Bienestar</a></li>
+					<li><a routerLink="/">Infantil</a></li>
+					<li><a routerLink="/">Fotoprotección</a></li>
+					<li><a routerLink="/">Inkaclub</a></li>
+					<li><a routerLink="/">Tienda 24 hrs.</a></li>
+					<li><a routerLink="/">Catálogo</a></li>
 				</ul>
 			</div>
 		</div>
@@ -71,7 +72,8 @@
 		<div class="sidebar-header">
 			<h3>Menú</h3>
 			<button class="close-btn" (click)="toggleMobileMenu()">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					stroke-linecap="round" stroke-linejoin="round">
 					<line x1="18" y1="6" x2="6" y2="18"></line>
 					<line x1="6" y1="6" x2="18" y2="18"></line>
 				</svg>
@@ -79,14 +81,14 @@
 		</div>
 		<div class="sidebar-content">
 			<ul class="mobile-categories-list">
-				<li><a href="#">Dermocosmética <span class="arrow">›</span></a></li>
-				<li><a href="#">Farmacia <span class="arrow">›</span></a></li>
-				<li><a href="#">Bienestar <span class="arrow">›</span></a></li>
-				<li><a href="#">Infantil <span class="arrow">›</span></a></li>
-				<li><a href="#">Fotoprotección <span class="arrow">›</span></a></li>
-				<li><a href="#">Inkaclub <span class="arrow">›</span></a></li>
-				<li><a href="#">Tienda 24 hrs. <span class="arrow">›</span></a></li>
-				<li><a href="#">Catálogo <span class="arrow">›</span></a></li>
+				<li><a routerLink="#">Dermocosmética <span class="arrow">›</span></a></li>
+				<li><a routerLink="#">Farmacia <span class="arrow">›</span></a></li>
+				<li><a routerLink="#">Bienestar <span class="arrow">›</span></a></li>
+				<li><a routerLink="#">Infantil <span class="arrow">›</span></a></li>
+				<li><a routerLink="#">Fotoprotección <span class="arrow">›</span></a></li>
+				<li><a routerLink="#">Inkaclub <span class="arrow">›</span></a></li>
+				<li><a routerLink="#">Tienda 24 hrs. <span class="arrow">›</span></a></li>
+				<li><a routerLink="#">Catálogo <span class="arrow">›</span></a></li>
 			</ul>
 		</div>
 	</aside>

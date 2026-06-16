@@ -34,12 +34,42 @@ jobs:
       - name: Configurar Node.js (Requerido para el scanner de JS/TS)
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # O la versión que uses en tu proyecto
+          node-version: '24'
 
       - name: Escaneo de SonarQube
         uses: SonarSource/sonarqube-scan-action@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Proporcionado automáticamente por GitHub
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Los secretos que debes configurar en la pestaña Settings > Secrets de tu repo
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+# --- DESPLIEGUE ---
+  deploy-s3:
+    name: Despliegue a AWS S3
+    needs: [semgrep-sast, sonarqube-analysis]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Compilar Angular (Producción)
+        run: npm run build
+
+      - name: Configurar credenciales de AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1 # La región Norte de Virginia
+
+      - name: Desplegar en S3
+        run: aws s3 sync dist/ecommerce-app/browser/ s3://inkafarma-frontend-reto-tecnico/ --delete
