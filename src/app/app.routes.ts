@@ -7,21 +7,21 @@ export const routes: Routes = [
 		children: [
 			{
 				path: '',
-				redirectTo: 'inicio',
+				loadComponent: () => import('./features/inicio/inicio').then(m => m.Inicio),
 				pathMatch: 'full'
-			},
-			{
-				path: 'inicio',
-				loadComponent: () => import('./features/inicio/inicio').then(m => m.Inicio)
 			},
 			{
 				path: 'products/:id',
 				loadComponent: () => import('./features/producto/pages/product-detail/product-detail.component').then(m => m.ProductDetailComponent)
+			},
+			{
+				path: '404',
+				loadComponent: () => import('./shared/components/not-found/not-found.component').then(m => m.NotFoundComponent)
 			}
 		]
 	},
 	{
 		path: '**',
-		redirectTo: 'inicio'
+		redirectTo: '404'
 	}
 ];
