@@ -1,0 +1,31 @@
+<div class="pdp-cross-selling">
+	<div class="carousel-header">
+		<div class="header-title">
+			<h2>Lo más buscado</h2>
+			<a href="#" class="show-more-link" (click)="$event.preventDefault()">Mostrar más</a>
+		</div>
+		<div class="carousel-controls">
+			<button class="nav-btn prev-btn" (click)="scrollCarousel('left')" aria-label="Anterior">
+				<mat-icon>chevron_left</mat-icon>
+			</button>
+			<button class="nav-btn next-btn" (click)="scrollCarousel('right')" aria-label="Siguiente">
+				<mat-icon>chevron_right</mat-icon>
+			</button>
+		</div>
+	</div>
+
+	@if (products && products.length > 0) {
+	<div class="carousel-container" #carousel
+		(mouseenter)="onMouseEnter()"
+		(mousedown)="onMouseDown($event)"
+		(mouseleave)="onMouseLeave()"
+		(mouseup)="onMouseUp()"
+		(mousemove)="onMouseMove($event)">
+		@for (item of products; track item.sId) {
+		<div class="product-carousel-item">
+			<app-product-card [product]="item" (addToCart)="onAddToCart($event)"></app-product-card>
+		</div>
+		}
+	</div>
+	}
+</div>

@@ -35,9 +35,9 @@
 
 				<!-- Cart Button -->
 				<div class="navbar-cart-container">
-					<button class="cart-btn">
+					<button class="cart-btn" (click)="cartService.toggleSidebar()">
 						<img src="assets/icons/cart.svg" alt="Cart" class="cart-icon">
-						<span class="cart-count">0</span>
+						<span class="cart-count">{{ cartService.totalItems() }}</span>
 					</button>
 				</div>
 			</div>

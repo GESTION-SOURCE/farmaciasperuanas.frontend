@@ -11,6 +11,7 @@ export class CartService {
 
 	// Reactive state using Angular Signals
 	private cartItemsSignal = signal<ICartItem[]>([]);
+	public isSidebarOpen = signal<boolean>(false);
 
 	// Computed signals for UI
 	public cartItems = this.cartItemsSignal.asReadonly();
@@ -46,6 +47,7 @@ export class CartService {
 		}
 
 		this.updateCart(newItems);
+		this.openSidebar(); // Auto open sidebar when adding item
 	}
 
 	removeFromCart(sItemId: string): void {
@@ -69,6 +71,18 @@ export class CartService {
 
 	clearCart(): void {
 		this.updateCart([]);
+	}
+
+	toggleSidebar(): void {
+		this.isSidebarOpen.update(v => !v);
+	}
+
+	openSidebar(): void {
+		this.isSidebarOpen.set(true);
+	}
+
+	closeSidebar(): void {
+		this.isSidebarOpen.set(false);
 	}
 
 	private updateCart(items: ICartItem[]): void {

@@ -8,6 +8,7 @@ trigger: always_on
 - Persistencia: El estado del carrito debe manejarse en memoria (Signals) y persistirse usando `localStorage`[cite: 1].
 - usa las carpetas core(aqui van guards, interceptors, interfaces generales), modules(aquí van los modulos del sistema, ejem: productos) de ser necesario.
 - Si cada componente usará interfaces, crea una carpeta interfaces al mismo nivel del componente que usará la interfaz y crea la interfaz (el nombre empezará con I mayúscula seguido del nombre: INombreInterfaz.interface.ts)
+- No usar código que pueda convertir en vulnerable a la web
 
 # Functional Scope
 El flujo debe contemplar las siguientes vistas[cite: 1]:

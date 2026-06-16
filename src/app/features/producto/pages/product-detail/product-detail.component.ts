@@ -9,15 +9,15 @@ import { CartService } from '../../../../core/services/cart.service';
 import { MockDataService } from '../../../../core/services/mock-data.service';
 import { SeoService } from '../../../../core/services/seo.service';
 import { AccordionComponent } from '../../../../shared/components/accordion/accordion.component';
-import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
 import { DiscountTagComponent } from '../../../../shared/components/discount-tag/discount-tag';
 import { FavoriteButton } from '../../../../shared/components/favorite-button/favorite-button';
 import { ProductDetailSkeletonComponent } from './components/product-detail-skeleton/product-detail-skeleton.component';
+import { MostSearchedProductsComponent } from './components/most-searched-products/most-searched-products.component';
 
 @Component({
 	selector: 'app-product-detail',
 	standalone: true,
-	imports: [DecimalPipe, RouterModule, ProductCardComponent, AccordionComponent, MatButtonModule, MatIconModule, DiscountTagComponent, UpperCasePipe, FavoriteButton, ProductDetailSkeletonComponent],
+	imports: [DecimalPipe, RouterModule, AccordionComponent, MatButtonModule, MatIconModule, DiscountTagComponent, UpperCasePipe, FavoriteButton, ProductDetailSkeletonComponent, MostSearchedProductsComponent],
 	templateUrl: './product-detail.component.html',
 	styleUrl: './product-detail.component.scss'
 })
@@ -28,7 +28,6 @@ export class ProductDetailComponent implements OnInit {
 	private seoService = inject(SeoService);
 	private analyticsService = inject(AnalyticsService);
 
-	@ViewChild('carousel') carousel!: ElementRef<HTMLDivElement>;
 	@ViewChild('descContent') descContent!: ElementRef<HTMLDivElement>;
 	@ViewChild('thumbnailsContainer') thumbnailsContainer!: ElementRef<HTMLDivElement>;
 
@@ -54,6 +53,7 @@ export class ProductDetailComponent implements OnInit {
 				if (product) {
 					this.product.set(product);
 					this.seoService.setSeoData(product.sNameProduct, product.sDescription.substring(0, 150));
+					this.seoService.addJsonLd(product);
 					this.analyticsService.trackViewItem(product);
 
 					if (product.aVariants && product.aVariants.length > 0) {
@@ -100,18 +100,7 @@ export class ProductDetailComponent implements OnInit {
 		}
 	}
 
-	onCrossSellingAddToCart(event: { product: IProduct; variant: any }): void {
-		this.cartService.addToCart(event.product, event.variant, 1);
-		this.analyticsService.trackAddToCart(event.product, event.variant, 1);
-	}
 
-	scrollCarousel(sDirection: 'left' | 'right'): void {
-		if (this.carousel) {
-			const el = this.carousel.nativeElement;
-			const nScrollAmount = 270;
-			el.scrollBy({ left: sDirection === 'left' ? -nScrollAmount : nScrollAmount, behavior: 'smooth' });
-		}
-	}
 
 	checkDescriptionOverflow(): void {
 		if (this.descContent) {

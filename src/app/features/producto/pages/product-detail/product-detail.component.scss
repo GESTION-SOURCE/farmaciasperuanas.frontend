@@ -39,7 +39,11 @@
 			flex: 1;
 			display: flex;
 			gap: 16px;
-			width: calc(100% - 428px);
+			width: 100%;
+
+			@media (min-width: 992px) {
+				width: calc(100% - 428px);
+			}
 
 			.thumbnails-wrapper {
 				display: flex;
@@ -117,7 +121,11 @@
 		}
 
 		.product-info {
-			width: 428px;
+			width: 100%;
+
+			@media (min-width: 992px) {
+				width: 428px;
+			}
 
 			.info-header {
 				display: flex;
@@ -125,7 +133,9 @@
 				align-items: center;
 				margin-bottom: 12px;
 				font-size: 13px;
-				font-weight: 600;
+				font-weight: 500;
+				line-height: 20px;
+				letter-spacing: 0.1px;
 
 				.variant-name-top {
 					color: #a0aec0;
@@ -141,14 +151,14 @@
 				font-weight: 700;
 				color: #2d3748;
 				line-height: 1.3;
-				margin-bottom: 24px;
+				margin-bottom: 28px;
 			}
 
 			.prices-block {
 				display: flex;
 				flex-direction: column;
 				gap: 12px;
-				margin-bottom: 24px;
+				margin-bottom: 28px;
 
 				.price-row {
 					display: flex;
@@ -201,7 +211,7 @@
 				font-size: 14px;
 				color: #718096;
 				line-height: 1.6;
-				margin-bottom: 24px;
+				margin-bottom: 28px;
 
 				.desc-content {
 					display: -webkit-box;
@@ -477,38 +487,46 @@
 
 	.pdp-secondary-section {
 		margin-bottom: 40px;
-	}
 
-	.pdp-cross-selling {
-		.carousel-header {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 24px;
+		::ng-deep {
+			.mat-expansion-panel {
+				background-color: #ffffff;
+				box-shadow: none;
+				border-radius: 0 !important;
+			}
 
-			h2 {
-				margin: 0;
-				font-size: 20px;
+			app-accordion {
+
+				.mat-expansion-panel-header {
+					border-color: #E4E8F0;
+					border-bottom: 1px solid #E4E8F0;
+				}
+
+				.mat-expansion-panel-body {
+					padding: 24px;
+				}
+
+				&:first-child {
+					.mat-expansion-panel {
+						border-top-left-radius: 16px !important;
+						border-top-right-radius: 16px !important;
+						border-color: #E4E8F0;
+						border-bottom: 0;
+					}
+				}
+
+				&:last-child {
+					.mat-expansion-panel {
+						border-bottom-left-radius: 16px !important;
+						border-bottom-right-radius: 16px !important;
+						border-color: #E4E8F0;
+						border-top: 0;
+					}
+				}
 			}
 		}
 
-		.carousel-container {
-			display: flex;
-			gap: 20px;
-			overflow-x: auto;
-			scroll-snap-type: x mandatory;
-			padding-bottom: 16px;
-			scrollbar-width: none;
 
-			&::-webkit-scrollbar {
-				display: none;
-			}
-
-			.carousel-item {
-				scroll-snap-align: start;
-				flex: 0 0 250px;
-			}
-		}
 	}
 }
 

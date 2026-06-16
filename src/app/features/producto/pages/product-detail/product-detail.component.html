@@ -134,7 +134,7 @@
 
 			<div class="pdp-secondary-section">
 				<app-accordion title="Descripción larga" [expanded]="true">
-					<p>{{ product.sDescription }}</p>
+					<div class="html-content" [innerHTML]="product.sDescription"></div>
 					<p>{{ product.sLongDescription }}</p>
 				</app-accordion>
 				<app-accordion title="Composición">
@@ -145,30 +145,7 @@
 				</app-accordion>
 			</div>
 
-			<div class="pdp-cross-selling">
-				<div class="carousel-header">
-					<h2>Lo más buscado</h2>
-					<div class="carousel-controls">
-						<button mat-icon-button (click)="scrollCarousel('left')" aria-label="Anterior">
-							<mat-icon>chevron_left</mat-icon>
-						</button>
-						<button mat-icon-button (click)="scrollCarousel('right')" aria-label="Siguiente">
-							<mat-icon>chevron_right</mat-icon>
-						</button>
-					</div>
-				</div>
-
-				@if (crossSellingProducts().length > 0) {
-				<div class="carousel-container" #carousel>
-					@for (item of crossSellingProducts(); track item.sId) {
-					<div class="carousel-item">
-						<app-product-card [product]="item" (addToCart)="onCrossSellingAddToCart($event)">
-						</app-product-card>
-					</div>
-					}
-				</div>
-				}
-			</div>
+			<app-most-searched-products [products]="crossSellingProducts()"></app-most-searched-products>
 
 			}
 		</div>

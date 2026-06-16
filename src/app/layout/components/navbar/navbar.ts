@@ -1,15 +1,20 @@
-import { Component, Inject, PLATFORM_ID, ElementRef, ViewChild, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, Renderer2 } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, ElementRef, ViewChild, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, Renderer2, inject, OnInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { fromEvent, Subscription } from 'rxjs';
-import { map, distinctUntilChanged, throttleTime } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { CartService } from '../../../core/services/cart.service';
 
 @Component({
 	selector: 'app-navbar',
-	imports: [],
+	standalone: true,
+	imports: [CommonModule, RouterModule],
 	templateUrl: './navbar.html',
 	styleUrl: './navbar.scss',
 })
 export class Navbar implements AfterViewInit, OnDestroy {
+	public cartService = inject(CartService);
 	isSticky = false;
 	navbarHeight = 80;
 	stickyNavbarHeight = 80;

@@ -85,54 +85,68 @@ const MOCK_PRODUCTS: IProduct[] = [
 	},
 	{
 		sId: '4',
-		sSku: 'SKU-1004',
-		sNameProduct: 'Toallitas Húmedas Huggies Limpieza Cotidiana 4',
-		sBrand: 'Huggies',
-		sDescription: 'Producto simulado para la prueba técnica.',
+		sSku: 'SKU-1006',
+		sNameProduct: 'Guantes de Látex Alkhofar Talla M',
+		sBrand: 'Alkhofar',
+		sDescription: '<ul><li>Guantes de examinación de látex ligeramente empolvados.</li><li>Talla M, ambidiestros y descartables. Protegen contra microorganismos y sustancias químicas.</li></ul>',
 		sLongDescription: 'Este producto es distribuido por Inretail Pharma S.A.',
-		sComposition: 'Composición genérica del producto detallada para demostración.',
-		sContraindications: 'No usar en caso de hipersensibilidad a los componentes.',
+		sComposition: 'Látex natural.',
+		sContraindications: 'No usar en personas con hipersensibilidad al látex.',
 		aImages: [
-			'assets/products/huggies/toallitas-humedas-huggies.png',
-			'assets/products/huggies/toallitas-humedas-huggies-184-und.png'
+			'assets/products/guantes-latex-alkhofar/guantes-latex-alkhofar-talla-m.jpg'
 		],
 		aThumbnails: [
-			'assets/products/huggies/thumbnail/toallitas-humedas-huggies-thumbnail.png',
-			'assets/products/huggies/thumbnail/toallitas-humedas-huggies-184-und-thumbnail.png'
+			'assets/products/guantes-latex-alkhofar/thumbnail/guantes-latex-alkhofar-talla-m-thumbnail.jpg'
 		],
-		nRegularPrice: 24.00,
+		nRegularPrice: 15.00,
 		nPromotionalPrice: undefined,
-		nCardPrice: 16.00,
+		nCardPrice: 12.00,
 		aVariants: [
-			{ sId: 'v1-4', sName: 'Bolsa 80 UN', nPrice: 24.00 },
-			{ sId: 'v2-4', sName: 'Caja 3 UN', nPrice: 54.00, sImage: 'assets/products/huggies/toallitas-humedas-huggies-184-und.png' }
+			{ sId: 'v1-6', sName: 'Caja x 100 UN', nPrice: 15.00, sImage: 'assets/products/guantes-latex-alkhofar/guantes-latex-alkhofar-talla-m.jpg' }
 		]
 	},
 	{
 		sId: '5',
-		sSku: 'SKU-1005',
-		sNameProduct: 'Pharamol Antigripal 500 mg 5',
-		sBrand: 'Inkafarma',
-		sDescription: '<ul><li>¿Qué es PHARAMOL ANTIGRIPAL 500mg+5mg+2mg Tableta Recubierta y para qué se utiliza?</li><li>Es un medicamento que contiene: paracetamol que funciona para evitar que los mensajes de dolor lleguen al cerebro, también actúa en el cerebro para reducir la fiebre. La fenilefrina es un descongestionante nasal y la clorfenamina pertenece a un grupo de medicamentos llamados antihistamínicos que alivian la alergia.</li></ul>',
+		sSku: 'SKU-1007',
+		sNameProduct: 'Papel Toalla Scott Multiuso 2 Und',
+		sBrand: 'Scott',
+		sDescription: '<ul><li>Papel toalla súper absorbente y ultra resistente.</li><li>Ideal para la limpieza de cocina y superficies múltiples del hogar. Rinde más gracias a su tecnología de absorción.</li></ul>',
 		sLongDescription: 'Este producto es distribuido por Inretail Pharma S.A.',
-		sComposition: 'Composición genérica del producto detallada para demostración.',
-		sContraindications: 'No usar en caso de hipersensibilidad a los componentes.',
+		sComposition: 'Celulosa virgen y fibras recicladas.',
+		sContraindications: 'Ninguna conocida.',
 		aImages: [
-			'assets/products/pharamol/caja-antigripal-pharamol.jpg',
-			'assets/products/pharamol/sobre-antigripal-pharamol.jpg',
-			'assets/products/pharamol/tabletas-antigripal-pharamol.png'
+			'assets/products/papel-toalla/papel-toalla-scott-2-und.jpg'
 		],
 		aThumbnails: [
-			'assets/products/pharamol/thumbnail/caja-antigripal-pharamol-thumbnail.jpg',
-			'assets/products/pharamol/thumbnail/sobre-antigripal-pharamol-thumbnail.png',
-			'assets/products/pharamol/thumbnail/tabletas-antigripal-pharamol-thumbnail.png'
+			'assets/products/papel-toalla/thumbnail/papel-toalla-scott-2-und-thumbnail.jpg'
 		],
-		nRegularPrice: 25.00,
-		nPromotionalPrice: undefined,
+		nRegularPrice: 6.50,
+		nPromotionalPrice: 5.00,
 		nCardPrice: undefined,
 		aVariants: [
-			{ sId: 'v1-5', sName: 'SOBRE X2 TABS 1 UN', nPrice: 25.00, sImage: 'assets/products/pharamol/sobre-antigripal-pharamol.jpg' },
-			{ sId: 'v2-5', sName: 'Caja 100 UN', nPrice: 55.00, sImage: 'assets/products/pharamol/caja-antigripal-pharamol.jpg' }
+			{ sId: 'v1-7', sName: 'Paquete 2 UN', nPrice: 6.50, sImage: 'assets/products/papel-toalla/papel-toalla-scott-2-und.jpg' }
+		]
+	},
+	{
+		sId: '6',
+		sSku: 'SKU-1008',
+		sNameProduct: 'Bálsamo Labial Nivea',
+		sBrand: 'Nivea',
+		sDescription: '<ul><li>Protector labial con fórmula humectante intensiva.</li><li>Brinda hidratación profunda por 24 horas y protege los labios contra la resequedad ocasionada por el clima.</li></ul>',
+		sLongDescription: 'Este producto es distribuido por Inretail Pharma S.A.',
+		sComposition: 'Manteca de karité, aceites naturales.',
+		sContraindications: 'Solo para uso externo. Detener uso en caso de irritación.',
+		aImages: [
+			'assets/products/balsamo/balsamo-nivea.jpg',
+		],
+		aThumbnails: [
+			'assets/products/balsamo/thumbnail/balsamo-nivea-thumbnail.jpg',
+		],
+		nRegularPrice: 10.90,
+		nPromotionalPrice: 8.50,
+		nCardPrice: undefined,
+		aVariants: [
+			{ sId: 'v1-8', sName: 'Stick 4.8g', nPrice: 10.90, sImage: 'assets/products/balsamo/balsamo-nivea.jpg' }
 		]
 	}
 ];

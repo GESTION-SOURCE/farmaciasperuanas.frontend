@@ -1,0 +1,104 @@
+.pdp-cross-selling {
+	margin-top: 24px;
+
+	.carousel-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 24px;
+
+		.header-title {
+			display: flex;
+			align-items: baseline;
+			gap: 16px;
+
+			h2 {
+				margin: 0;
+				font-size: 16px;
+				font-weight: 700;
+				color: #354159;
+				line-height: 24px;
+			}
+
+			.show-more-link {
+				font-size: 14px;
+				font-weight: 600;
+				color: #1A8FF1;
+				text-decoration: none;
+			}
+		}
+
+		.carousel-controls {
+			display: flex;
+			gap: 8px;
+
+			.nav-btn {
+				width: 32px;
+				height: 32px;
+				border-radius: 6px;
+				border: none;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				transition: background-color 0.2s, opacity 0.2s;
+
+				::ng-deep .mat-icon {
+					font-size: 20px;
+					width: 20px;
+					height: 20px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+
+				&.prev-btn {
+					background-color: #e2e8f0;
+					color: #64748b;
+
+					&:hover {
+						background-color: #cbd5e1;
+					}
+				}
+
+				&.next-btn {
+					background-color: #17A15B;
+					color: #ffffff;
+
+					&:hover {
+						background-color: #109c5b;
+					}
+				}
+			}
+		}
+	}
+
+	.carousel-container {
+		display: flex;
+		gap: 20px;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		padding-bottom: 24px;
+		scrollbar-width: none;
+		cursor: grab;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		.product-carousel-item {
+			scroll-snap-align: start;
+			flex: 0 0 250px;
+
+			/* Prevent native image/link dragging which conflicts with custom scroll drag */
+			::ng-deep img,
+			::ng-deep a {
+				-webkit-user-drag: none;
+				-khtml-user-drag: none;
+				-moz-user-drag: none;
+				-o-user-drag: none;
+				user-select: none;
+			}
+		}
+	}
+}
