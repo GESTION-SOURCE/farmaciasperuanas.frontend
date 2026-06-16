@@ -13,7 +13,7 @@ export interface IProduct {
 	sLongDescription: string;
 	sComposition: string;
 	sContraindications: string;
-	aImages: string[];
+	aImages?: string[];
 	aThumbnails?: string[];
 	nRegularPrice: number;
 	nPromotionalPrice?: number;
