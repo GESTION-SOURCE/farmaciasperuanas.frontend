@@ -120,6 +120,29 @@ describe('ProductDetailComponent', () => {
 		});
 	});
 
+	describe('Initialization Edge Cases', () => {
+		it('#Should call getProductById with empty string When id param is null', () => {
+			mockActivatedRoute.paramMap = of({ get: () => null });
+			mockDataService.getProductById.mockReturnValue(of(null));
+			component.ngOnInit();
+			expect(mockDataService.getProductById).toHaveBeenCalledWith('');
+		});
+
+		it('#Should fallback to aImages When first variant has no sImage', () => {
+			mockProduct = { sId: '123', sNameProduct: 'N', sDescription: 'D', aImages: ['img1.jpg'], aVariants: [{ sId: 'v1', sName: 'v1', nPrice: 10 }] };
+			mockDataService.getProductById.mockReturnValue(of(mockProduct));
+			component.ngOnInit();
+			expect(component.mainImage()).toBe('img1.jpg');
+		});
+
+		it('#Should fallback to aImages When product has no variants but has aImages', () => {
+			mockProduct = { sId: '123', sNameProduct: 'N', sDescription: 'D', aImages: ['img2.jpg'], aVariants: [] };
+			mockDataService.getProductById.mockReturnValue(of(mockProduct));
+			component.ngOnInit();
+			expect(component.mainImage()).toBe('img2.jpg');
+		});
+	});
+
 	describe('Interactions', () => {
 		beforeEach(() => {
 			mockProduct = {
@@ -146,6 +169,12 @@ describe('ProductDetailComponent', () => {
 			const variant = { sId: 'v2', sName: 'Variant 2', nPrice: 20, sImage: 'v2.jpg' };
 			component.selectVariant(variant);
 			expect(component.mainImage()).toBe('v2.jpg');
+		});
+
+		it('#Should fallback to product main image When selectVariant is called and variant has no image', () => {
+			const variant = { sId: 'v3', sName: 'Variant 3', nPrice: 30 };
+			component.selectVariant(variant);
+			expect(component.mainImage()).toBe('image1.jpg');
 		});
 
 		it('#Should set main image When setMainImage is called', () => {
@@ -219,7 +248,7 @@ describe('ProductDetailComponent', () => {
 			component.thumbnailsContainer = { nativeElement: mockEl } as any;
 			const mouseDownEvent = new MouseEvent('mousedown', { clientY: 50 });
 			Object.defineProperty(mouseDownEvent, 'pageY', { value: 50 });
-			
+
 			component.onThumbnailsMouseDown(mouseDownEvent);
 			expect(component.isDragging).toBe(true);
 		});
@@ -229,7 +258,7 @@ describe('ProductDetailComponent', () => {
 			component.thumbnailsContainer = { nativeElement: mockEl } as any;
 			const mouseDownEvent = new MouseEvent('mousedown', { clientY: 50 });
 			Object.defineProperty(mouseDownEvent, 'pageY', { value: 50 });
-			
+
 			component.onThumbnailsMouseDown(mouseDownEvent);
 			expect(mockEl.style.cursor).toBe('grabbing');
 		});
@@ -238,7 +267,7 @@ describe('ProductDetailComponent', () => {
 			const mockEl = { offsetTop: 10, scrollTop: 20, style: { cursor: '' } };
 			component.thumbnailsContainer = { nativeElement: mockEl } as any;
 			component.isDragging = true;
-			
+
 			component.onThumbnailsMouseLeave();
 			expect(component.isDragging).toBe(false);
 		});
@@ -247,7 +276,7 @@ describe('ProductDetailComponent', () => {
 			const mockEl = { offsetTop: 10, scrollTop: 20, style: { cursor: '' } };
 			component.thumbnailsContainer = { nativeElement: mockEl } as any;
 			component.isDragging = true;
-			
+
 			component.onThumbnailsMouseUp();
 			expect(component.isDragging).toBe(false);
 		});
@@ -256,9 +285,30 @@ describe('ProductDetailComponent', () => {
 			const mockEl = { offsetTop: 10, scrollTop: 20, style: { cursor: '' } };
 			component.thumbnailsContainer = { nativeElement: mockEl } as any;
 			component.isDragging = true;
-			
+
 			component.onThumbnailsMouseUp();
 			expect(mockEl.style.cursor).toBe('grab');
+		});
+
+		it('#Should not throw error When thumbnailsContainer is undefined in onThumbnailsMouseDown', () => {
+			component.thumbnailsContainer = undefined as any;
+			expect(() => component.onThumbnailsMouseDown(new MouseEvent('mousedown'))).not.toThrow();
+		});
+
+		it('#Should not throw error When thumbnailsContainer is undefined in scrollThumbnails', () => {
+			component.thumbnailsContainer = undefined as any;
+			expect(() => component.scrollThumbnails('up')).not.toThrow();
+		});
+
+		it('#Should not throw error When descContent is undefined in checkDescriptionOverflow', () => {
+			component.descContent = undefined as any;
+			expect(() => component.checkDescriptionOverflow()).not.toThrow();
+		});
+
+		it('#Should set showVerMasBtn to true When scrollHeight is greater than clientHeight', () => {
+			component.descContent = { nativeElement: { scrollHeight: 200, clientHeight: 100 } } as any;
+			component.checkDescriptionOverflow();
+			expect(component.showVerMasBtn()).toBe(true);
 		});
 	});
 });
