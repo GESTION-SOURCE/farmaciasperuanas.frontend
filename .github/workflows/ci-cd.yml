@@ -1,0 +1,45 @@
+name: Pipeline de Seguridad y Calidad (Merge a Main)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  semgrep-sast:
+    name: Analisis SAST (Semgrep)
+    runs-on: ubuntu-latest
+    container:
+      # Imagen oficial de Semgrep optimizada
+      image: returntocorp/semgrep
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+      
+      - name: Ejecutar Semgrep CI
+        run: semgrep ci
+        # Semgrep detectará automáticamente el lenguaje (TypeScript/Angular) 
+        # y aplicará las reglas de seguridad recomendadas.
+
+  sonarqube-analysis:
+    name: Analisis de Calidad (SonarQube)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+        with:
+          # SonarQube requiere el historial completo para evaluar el "New Code"
+          fetch-depth: 0 
+
+      - name: Configurar Node.js (Requerido para el scanner de JS/TS)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # O la versión que uses en tu proyecto
+
+      - name: Escaneo de SonarQube
+        uses: SonarSource/sonarqube-scan-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Proporcionado automáticamente por GitHub
+          # Los secretos que debes configurar en la pestaña Settings > Secrets de tu repo
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
