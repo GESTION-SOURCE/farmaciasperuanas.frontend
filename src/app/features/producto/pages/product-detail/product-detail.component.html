@@ -17,7 +17,7 @@
 			<div class="pdp-main-section">
 				<!-- Left Column: Gallery -->
 				<div class="product-gallery">
-					@if (product.aImages.length > 1) {
+					@if (product.aImages && product.aImages.length > 1) {
 					<div class="thumbnails-wrapper">
 						<button mat-icon-button class="nav-btn up" (click)="scrollThumbnails('up')">
 							<mat-icon>keyboard_arrow_up</mat-icon>
@@ -106,8 +106,8 @@
 							<button class="variant-card" [class.selected]="selectedVariant()?.sId === variant.sId"
 								(click)="selectVariant(variant)">
 								<div class="variant-img">
-									<img [src]="variant.sImage || product.aImages[0]" [alt]="variant.sName"
-										loading="lazy" decoding="async">
+									<img [src]="variant.sImage || product.aImages?.[0] || 'assets/placeholder.png'"
+										[alt]="variant.sName" loading="lazy" decoding="async">
 								</div>
 								<div class="variant-details">
 									<span class="v-name">{{ variant.sName }}</span>
